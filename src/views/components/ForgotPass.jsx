@@ -28,51 +28,51 @@ const ForgotPass = () => {
   };
   return (
     <div>
-      <body class="bg-light">
+      <body className="bg-light">
         <div id="layoutAuthentication">
           <div id="layoutAuthentication_content">
             <main>
-              <div class="container">
-                <div class="row justify-content-center">
-                  <div class="col-lg-5">
-                    <div class="card shadow-lg border-0 rounded-lg my-5">
-                      <div class="card-header bg-primary">
-                        <h3 class="text-white text-center font-weight-light my-4">
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-lg-5">
+                    <div className="card shadow-lg border-0 rounded-lg my-5">
+                      <div className="card-header bg-primary">
+                        <h3 className="text-white text-center font-weight-light my-4">
                           Đặt lại mật khẩu
                         </h3>
                       </div>
-                      <div class="card-body">
-                        <div class="small mb-3 text-muted">
+                      <div className="card-body">
+                        <div className="small mb-3 text-muted">
                           Kiểm trả email đã đăng ký để truy cập link đặt lại mật
                           khẩu
                         </div>
                         <form onSubmit={HandleSubmit}>
-                          <div class="form-floating mb-3">
+                          <div className="form-floating mb-3">
                             <input
-                              class="form-control"
+                              className="form-control"
                               id="inputEmail"
                               name="email"
                               onChange={HandleInput}
                               type="email"
                               placeholder="name@example.com"
                             />
-                            <label for="inputEmail">Địa chỉ email</label>
+                            <label htmlFor="inputEmail">Địa chỉ email</label>
                           </div>
-                          <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                          <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
                             <Link
-                              class="small text-decoration-none"
+                              className="small text-decoration-none"
                               to="/login"
                             >
                               Quay lại đăng nhập
                             </Link>
-                            <button class="btn btn-primary">
+                            <button className="btn btn-primary">
                               Gửi đường dẫn
                             </button>
                           </div>
                         </form>
                       </div>
-                      <div class="card-footer text-center py-3">
-                        <div class="small">
+                      <div className="card-footer text-center py-3">
+                        <div className="small">
                           <Link className="text-decoration-none" to="/register">
                             Chưa có tài khoản? Tạo tài khoản!
                           </Link>

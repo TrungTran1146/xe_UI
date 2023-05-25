@@ -1,0 +1,14 @@
+.text-reset {
+    text-decoration: none !important;
+
+}
+
+/* a:hover {
+    background-color: red;
+} */
+
+.text-reset:hover {
+    /* background: #ff0000; */
+    text-decoration: underline !important;
+    color: #212934;
+}

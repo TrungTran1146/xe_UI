@@ -1,9 +1,11 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import ProductList from "../components/ProductList";
-import Slider from "../components/Slider";
-import Service from "../components/Service";
+import Navbar from "../components/Navbar/Navbar.jsx";
+import Footer from "../components/Footer/Footer.jsx";
+import ProductList from "../components/Product/ProductList.jsx";
+import Slider from "../components/Slider/Slider.jsx";
+import Service from "../components/Service/Service.jsx";
+
+import Product from "../components/Product/Product.jsx";
 
 const ProductListPage = () => {
   return (
@@ -11,6 +13,7 @@ const ProductListPage = () => {
       <Navbar />
       <Slider />
       <ProductList />
+      <Product />
       <Service />
       <Footer />
     </div>

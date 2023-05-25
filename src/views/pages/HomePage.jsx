@@ -1,16 +1,18 @@
 import React from "react";
-import Footer from "../components/Footer";
-import HotItem from "../components/HotItem";
-import Navbar from "../components/Navbar";
-import Service from "../components/Service";
-import Slider from "../components/Slider";
+import Footer from "../components/Footer/Footer.jsx";
+
+
+import Service from "../components/Service/Service.jsx";
+import Slider from "../components/Slider/Slider.jsx";
+import Navbar from "../components/Navbar/Navbar.jsx";
+
 
 const HomePage = () => {
   return (
     <div>
       <Navbar />
       <Slider />
-      <HotItem />
+
       <Service />
       <Footer />
     </div>

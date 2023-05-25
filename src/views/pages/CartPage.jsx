@@ -1,16 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar.jsx";
 import Footer from "../components/Footer/Footer.jsx";
-import Login from "../components/Login/Login.jsx";
+import Cart from "../components/Cart/Cart.jsx";
 
-const LoginPage = () => {
+
+
+const CartPage = () => {
   return (
     <div>
       <Navbar />
-      <Login />
+      <Cart />
       <Footer />
     </div>
   );
 };
 
-export default LoginPage;
+export default CartPage;

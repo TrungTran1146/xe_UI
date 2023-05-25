@@ -7,9 +7,14 @@ import "bootstrap/dist/js/bootstrap.js";
 import "./assets/css/customTemplate.css";
 import "./assets/js/customJs";
 
+import { Provider } from "react-redux";
+import store from "./views/redux/store";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>,
+  {/* </React.StrictMode> */ }
 );

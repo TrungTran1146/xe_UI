@@ -9,9 +9,18 @@
         margin: 0;
     } */
 
-    height: 20px;
-    width: 20px;
+    /* height: 50%; */
+    /* width: 50%; */
     cursor: pointer;
     transform: scale(0.5, 0.5);
-    margin-left: -45px;
+    margin-left: -175px;
+}
+
+.header {
+    height: 100px;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1;
 }
