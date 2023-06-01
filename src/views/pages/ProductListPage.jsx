@@ -5,7 +5,7 @@ import ProductList from "../components/Product/ProductList.jsx";
 import Slider from "../components/Slider/Slider.jsx";
 import Service from "../components/Service/Service.jsx";
 
-import Product from "../components/Product/Product.jsx";
+// import Product from "../components/Product/Product.jsx";
 
 const ProductListPage = () => {
   return (
@@ -13,7 +13,7 @@ const ProductListPage = () => {
       <Navbar />
       <Slider />
       <ProductList />
-      <Product />
+      {/* <Product /> */}
       <Service />
       <Footer />
     </div>

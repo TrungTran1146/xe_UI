@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <div>
       {/* Navbar */}
-      <nav className="header navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="header navbar navbar-expand-lg navbar-dark bg-success">
         <div className="container">
           <Link className="navbar-brand" to="/">
 
@@ -37,17 +37,15 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
-                  Trang chủ
+                  Giới thiệu
                 </Link>
               </li>
               <li className="nav-item dropdown">
                 <Link
-                  className="nav-link "
+                  className="nav-link active "
                   // dropdown-toggle
                   to="/shop"
-                  id="navbarDropdown"
-
-                >
+                  id="navbarDropdown">
                   Xe máy
                 </Link>
 
@@ -76,9 +74,9 @@ const Navbar = () => {
                 type="submit"
               >
                 <FontAwesomeIcon icon={faCartShopping} />
-                {/* <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
-                  7
-                </span> */}
+                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                  0
+                </span>
               </Link>
             </form>
           </div>

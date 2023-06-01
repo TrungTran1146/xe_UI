@@ -79,3 +79,8 @@
     object-fit: cover;
     border-radius: 50%;
 }
+
+/* //////////////////ProductDetail/////////////// */
+.Productdetail {
+    margin-top: 70px;
+}

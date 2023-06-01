@@ -9,7 +9,7 @@ export const loginUser = async (user, dispatch, navigate) => {
         const res = await axios.post("/login", user);
 
         dispatch(loginSuccess(res.data));
-
+        console.table(res.data);
         // localStorage.setItem("tokens",  JSON.stringify(res.data));
         // setUser(jwt_decode(res.data.access_token));
         navigate("/");
