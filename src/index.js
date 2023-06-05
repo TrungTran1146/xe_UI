@@ -8,7 +8,7 @@ import "./assets/css/customTemplate.css";
 import "./assets/js/customJs";
 
 import { Provider } from "react-redux";
-import store from "./views/redux/store";
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

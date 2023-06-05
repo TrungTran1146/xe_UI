@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/js/scriptsAdmin";
+import "../assets/js/scriptsAdmin.js";
 // import NavbarAdmin from "./NavbarAdmin/NavbarAdmin.jsx";
 import Sidebar from "./Sidebar/Sidebar";
 import { ToastContainer, toast } from 'react-toastify';

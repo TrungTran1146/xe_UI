@@ -13,6 +13,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [isAdmin, setAdmin] = useState('false');
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

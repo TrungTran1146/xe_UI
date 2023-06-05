@@ -4,7 +4,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import logo from '../../../assets/image/logo1.svg';
+// import logo from '../../../assets/image/logo1.svg';
 import './Navbar.css';
 const Navbar = () => {
   return (
@@ -36,7 +36,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <Link className="nav-link active " aria-current="page" to="/">
                   Giới thiệu
                 </Link>
               </li>

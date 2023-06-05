@@ -35,10 +35,10 @@ const ProductList = () => {
 
       {/* Sản phẩm */}
       <div className="container">
-        < div class="row " >
+        < div className="row " >
           {products.map((product) => {
             return (
-              <div class="col-md-6 col-lg-4 col-xl-3">
+              <div className="col-md-6 col-lg-4 col-xl-3">
                 <div key={product.id}>
                   <div className="my-3 bg-light">
                     <div className="card ">

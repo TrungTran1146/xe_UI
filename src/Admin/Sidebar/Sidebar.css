@@ -1,0 +1,48 @@
+.navbar-logo {
+
+    cursor: pointer;
+    transform: scale(0.5, 0.5);
+    margin-left: -100px;
+}
+
+.nav-pills li a:hover {
+    background-color: rgb(165, 165, 178);
+}
+
+/* Sidebar */
+#sidebar {
+    height: 100%;
+    /* position: fixed; */
+    left: -250px;
+    top: 0;
+    width: 250px;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    background-color: #5df107;
+    color: #fff;
+}
+
+.components {
+    padding: 20px;
+}
+
+.components li a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    color: #333;
+}
+
+.components li a:hover,
+.components li a.active {
+    background-color: #007bff;
+    color: #fff;
+}

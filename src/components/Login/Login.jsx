@@ -3,13 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./Login.css"
 // import axios from "axios";
-
-import { login } from "../../services/auth";
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
+
+
+
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

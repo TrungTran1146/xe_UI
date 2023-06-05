@@ -34,13 +34,14 @@ const getProductID = (id) => {
     return axios.get(`/Product/GetProductByID/${id}`);
 }
 const postCreateProduct = (product) => {
-    return axios.get(`/Product/CreateProduct`);
+    return axios.post(`/Product/CreateProduct`);
 }
+
 const putUpdateProduct = (data) => {
-    return axios.get(`/Product/UpdateProduct/${data.id}`);
+    return axios.put(`/Product/UpdateProduct/${data.id}`);
 }
-const deleteDeteteProduct = (id) => {
-    return axios.get(`/Product/UpdateProduct/${id}`);
+const deleteProduct = (id) => {
+    return axios.delete(`/Product/DeleteProduct/${id}`);
 }
 
 export {
@@ -48,5 +49,5 @@ export {
     getProductID,
     postCreateProduct,
     putUpdateProduct,
-    deleteDeteteProduct
+    deleteProduct
 }
