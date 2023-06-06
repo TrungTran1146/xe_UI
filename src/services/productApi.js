@@ -33,12 +33,21 @@ const getAllProduct = () => {
 const getProductID = (id) => {
     return axios.get(`/Product/GetProductByID/${id}`);
 }
-const postCreateProduct = (product) => {
-    return axios.post(`/Product/CreateProduct`);
+const postCreateProduct = (name, price, status, quantity, description, image, brandId, typecarId) => {
+    return axios.post(`/Product/CreateProduct`, { name, price, status, quantity, description, image, brandId, typecarId });
 }
+// const newProduct = {
+//     name: name,
+//     price: price,
+//     status: status,
+//     description: description,
+//     image: image,
+//     brandId: brandId,
+//     typecarId: typecarId
 
-const putUpdateProduct = (data) => {
-    return axios.put(`/Product/UpdateProduct/${data.id}`);
+// };
+const putUpdateProduct = (id, name, price, status, description, image, brandId, typecarId) => {
+    return axios.put(`/Product/UpdateProduct/${id}`, { name, price, status, description, image, brandId, typecarId });
 }
 const deleteProduct = (id) => {
     return axios.delete(`/Product/DeleteProduct/${id}`);

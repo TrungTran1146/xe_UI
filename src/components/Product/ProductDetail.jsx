@@ -4,12 +4,9 @@ import { getProductID } from "../../services/productApi";
 import './Product.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { faCreativeCommonsSamplingPlus } from "@fortawesome/free-brands-svg-icons";
 import Table from 'react-bootstrap/Table';
 
 
@@ -25,7 +22,7 @@ const ProductDetail = (props) => {
     const response = await getProductID(id);
     setProduct(response.data);
   }
-  console.log(product)
+
   if (!product) {
     return null;
   }

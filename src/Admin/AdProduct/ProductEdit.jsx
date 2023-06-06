@@ -1,15 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 import { ToastContainer, toast } from 'react-toastify';
-import { postCreateProduct } from "../../services/productApi";
+import { putUpdateProduct } from "../../services/productApi";
 
-const ProductAddNew = (props) => {
-    const { show, handleClose, handleUpdateTable } = props;
+const ProductEdit = (props) => {
+    const { show, handleClose, dataProductEdit } = props;
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState();
-    const [quantity, setQuantity] = useState();
     const [status, setStatus] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
@@ -18,59 +17,45 @@ const ProductAddNew = (props) => {
 
 
 
-    //Tạo sản phẩm
-    // const newProduct = {
-    //     name: name,
-    //     price: price,
-    //     status: status,
-    //     description: description,
-    //     image: image,
-    //     brandId: brandId,
-    //     typecarId: typecarId
-
-    // };
-
-    const handleSaveProduct = async () => {
-        let res = await postCreateProduct(name, price, status, quantity, description, image, brandId, typecarId);
-
-        if (res && res.data.id) {
-            handleClose();
-            setName('');
-            setPrice();
-            setStatus('');
-            setQuantity();
-            setDescription('');
-            setImage('');
-            setBrandId(8);
-            setTypeCarId(2);
-            handleUpdateTable({
-                name: name,
-                price: price,
-                quantity: quantity,
-                status: status,
-
-                description: description,
-                image: image,
-                id: res.data.id
-            })
-            toast.success("Thêm xe thành công!");
-            handleClose();
 
 
+    useEffect(() => {
+        if (show) {
+            setName(dataProductEdit.name);
+            setPrice(dataProductEdit.price);
+            setStatus(dataProductEdit.status);
+            setDescription(dataProductEdit.description);
+            setImage(dataProductEdit.image);
 
-
-        } else {
-            toast.error("Thêm xe thất bại!");
         }
-    }
+    }, [dataProductEdit]);
 
+    const editProduct = {
+        name: name,
+        price: price,
+        status: status,
+        description: description,
+        image: image,
+        // brandId,
+        // typecarId
+
+    };
+    console.log(dataProductEdit.id, name, price, status, description, image);
+    const handleEditProduct = async () => {
+        const res = await putUpdateProduct(dataProductEdit.id, editProduct);
+        console.log(res);
+    }
 
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
                 <Modal.Header closeButton>
-                    <Modal.Title>Thêm sản phẩm</Modal.Title>
+                    <Modal.Title>Sửa sản phẩm</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="body-add-new">
@@ -104,20 +89,12 @@ const ProductAddNew = (props) => {
                                 value={status}
                                 onChange={(e) => setStatus(e.target.value)}
                             >
-                                <option value="">-- Chọn trạng thái --</option>
+                                {/* <option value="">-- Select Status --</option> */}
                                 <option value="Còn hàng">Còn hàng</option>
                                 <option value="Hết hàng">Hết hàng</option>
                             </select>
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Số lượng</label>
-                            <input type="number"
-                                className="form-control"
-                                placeholder="Nhập số lượng xe "
-                                value={quantity}
-                                onChange={(event) => setQuantity(event.target.value)} />
 
-                        </div>
                         <div className="mb-3">
                             <label className="form-label">Ảnh</label>
                             <input type="text"
@@ -139,18 +116,17 @@ const ProductAddNew = (props) => {
                                 onChange={(e) => setDescription(e.target.value)}
                             ></textarea>
                         </div>
-
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => handleSaveProduct()}>
-                        Save Changes
+                    <Button variant="primary" onClick={() => handleEditProduct()}>
+                        Confirm
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>);
 };
-export default ProductAddNew;
+export default ProductEdit;

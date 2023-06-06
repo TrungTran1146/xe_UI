@@ -39,6 +39,7 @@ function App() {
         </Router>
 
       </CartContext.Provider>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

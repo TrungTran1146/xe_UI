@@ -1,10 +1,14 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
-import ProductAddNew from './ProductAddNew';
+
 import { getAllProduct } from '../../services/productApi';
 import { Button } from 'bootstrap';
 import './Product.css';
+
 import ProductDelete from './ProductDelete';
+import ProductEdit from './ProductEdit';
+import ProductAddNew from './ProductAddNew';
+import _ from "lodash";
 
 
 const TableProduct = (props) => {
@@ -13,48 +17,54 @@ const TableProduct = (props) => {
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
 
+    const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+    const [dataProductEdit, setDatProductEdit] = useState({});
+
+
     const [isShowDelete, setIsShowDelete] = useState(false);
     const [dataProductDelete, setDataProductDelete] = useState({})
+
+
+
     const handleClose = () => {
         setIsShowModalAddNew(false);
+        setIsShowModalEdit(false);
         setIsShowDelete(false);
     }
 
-    const handleUpdateTable = (user) => {
-        setListProduct([user, ...listProduct])
+    const handleUpdateTable = (product) => {
+        setListProduct([product, ...listProduct])
     }
 
-
+    //call api getallProduct
     useEffect(() => {
-        //call api
+
         getProduct();
     }, [])
-
-
-
-
-
 
     const getProduct = async () => {
         let res = await getAllProduct();
         if (res && res.data) {
-            // console.log(res);
-            // setTotalUser(res.total);
-            // setTotalPages(res.total_pages)
             setListProduct(res.data);
         }
-
     }
 
     //Sửa sản phẩm
-    const handleEditProduct = () => {
-        alert("trung nef")
+    const handleEditProduct = (product) => {
+        setDatProductEdit(product);
+        setIsShowModalEdit(true);
     }
+
     //Xóa Sản phẩm
     const handleDeleteProduct = (product) => {
         setIsShowDelete(true);
         setDataProductDelete(product);
 
+    }
+    const handleDeleteProductFromModal = (product) => {
+        let cloneListProduct = _.cloneDeep(listProduct);
+        cloneListProduct = cloneListProduct.filter(item => item.id !== product.id);
+        setListProduct(cloneListProduct);
     }
     return (
         <>
@@ -75,6 +85,7 @@ const TableProduct = (props) => {
                                     <th>Giá Xe</th>
                                     <th>Ảnh</th>
                                     <th>Trạng Thái</th>
+                                    <th>Số lượng</th>
                                     <th>Mô tả</th>
                                     <th>Hành Động</th>
 
@@ -90,11 +101,16 @@ const TableProduct = (props) => {
                                                 <td>{item.price}</td>
                                                 <td>{item.image}</td>
                                                 <td>{item.status}</td>
+                                                <td>{item.quantity}</td>
                                                 <td>{item.description}</td>
                                                 <td>
-                                                    <button className='btn-edit' onClick={handleEditProduct}
-                                                    ><i className="bi bi-pencil "></i></button>
-                                                    <button className='btn-delete ' onClick={() => handleDeleteProduct(item)}
+                                                    <button className='btn-edit'
+                                                        onClick={() => handleEditProduct(item)}
+                                                    ><i className="bi bi-pencil "></i>
+                                                    </button>
+
+                                                    <button className='btn-delete '
+                                                        onClick={() => handleDeleteProduct(item)}
                                                     ><i className="bi bi-trash-fill "></i>
                                                     </button>
                                                 </td>
@@ -107,14 +123,28 @@ const TableProduct = (props) => {
                     </div >
                 </div >
             </div >
+
+
+            {/* Them */}
             <ProductAddNew
                 show={isShowModalAddNew}
                 handleClose={handleClose}
-                handleUpdateTable={handleUpdateTable} />
+                handleUpdateTable={handleUpdateTable}
+            />
+
+            {/* Sua */}
+            <ProductEdit
+                show={isShowModalEdit}
+                handleClose={handleClose}
+                dataProductEdit={dataProductEdit}
+            />
+
+            {/* Xoa */}
             <ProductDelete
                 show={isShowDelete}
                 handleClose={handleClose}
                 dataProductDelete={dataProductDelete}
+                handleDeleteProductFromModal={handleDeleteProductFromModal}
             />
         </>
 
