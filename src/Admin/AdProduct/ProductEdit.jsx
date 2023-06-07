@@ -34,23 +34,9 @@ const ProductEdit = (props) => {
         }
     }, [dataProductEdit]);
 
-    // console.log('check', dataProductEdit)
-
-    // const editProduct = {
-    //     name: name,
-    //     price: price,
-    //     status: status,
-    //     description: description,
-    //     image: image,
-    //     brandId: brandId,
-    //     typeCarId: typeCarId
-
-    // };
-    // console.log('check edit', editProduct)
     const handleEditProduct = async () => {
 
         const res = await putUpdateProduct(dataProductEdit.id, name, price, status, quantity, description, image, brandId, typeCarId);
-        console.log(res.data)
         if (res && res.data.id) {
             handleClose();
             handleEditProductFromModal({

@@ -35,6 +35,9 @@ const getAllBrand = () => {
 const postBrand = (brandName, description) => {
     return axios.post("/Brand/CreateBrand", { brandName, description });
 }
+const putBrand = (id, brandName, description) => {
+    return axios.put(`/Brand/UpdateBrand/${id}`, { brandName, description })
+}
 const deleteBrand = (id) => {
     return axios.delete(`/Brand/DeleteBrand/${id}`);
 }
@@ -42,5 +45,6 @@ const deleteBrand = (id) => {
 export {
     getAllBrand,
     postBrand,
+    putBrand,
     deleteBrand
 }

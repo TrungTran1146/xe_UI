@@ -46,8 +46,11 @@ const TableProduct = (props) => {
 
         let index = listProduct.findIndex(item => item.id === product.id);
         cloneListProduct[index].name = product.name;
-
-
+        cloneListProduct[index].price = product.price;
+        cloneListProduct[index].status = product.status;
+        cloneListProduct[index].quantity = product.quantity;
+        cloneListProduct[index].description = product.description;
+        cloneListProduct[index].image = product.image;
         setListProduct(cloneListProduct);
     }
 

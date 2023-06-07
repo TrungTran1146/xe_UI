@@ -36,6 +36,16 @@ const TableBrand = (props) => {
         setListBrand([brand, ...listBrand])
     }
 
+
+    const handleEditBrandFromModal = (brand) => {
+        let cloneListBrand = _.cloneDeep(listBrand);
+
+        let index = listBrand.findIndex(item => item.id === brand.id);
+        cloneListBrand[index].brandName = brand.brandName;
+        cloneListBrand[index].description = brand.description;
+        setListBrand(cloneListBrand);
+    }
+
     //call api getallBrand
     useEffect(() => {
 
@@ -126,11 +136,12 @@ const TableBrand = (props) => {
             />
 
             {/* Sua */}
-            {/* <BrandEdit
+            <BrandEdit
                 show={isShowModalEdit}
                 handleClose={handleClose}
                 dataBrandEdit={dataBrandEdit}
-            /> */}
+                handleEditBrandFromModal={handleEditBrandFromModal}
+            />
 
             {/* Xoa */}
             <BrandDelete
