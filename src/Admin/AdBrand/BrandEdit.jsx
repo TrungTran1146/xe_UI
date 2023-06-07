@@ -56,7 +56,7 @@ const BrandEdit = (props) => {
                     <div className="body-add-new">
 
                         <div className="mb-3">
-                            <label className="form-label">Tên xe</label>
+                            <label className="form-label">Tên hãng xe</label>
                             <input type="text"
                                 className="form-control"
                                 placeholder="Nhập tên xe"
@@ -81,10 +81,10 @@ const BrandEdit = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                     <Button variant="primary" onClick={() => handleEditBrand()}>
-                        Confirm
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>

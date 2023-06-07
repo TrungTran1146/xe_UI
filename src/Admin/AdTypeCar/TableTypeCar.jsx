@@ -35,6 +35,14 @@ const TableTypeCar = (props) => {
     const handleUpdateTable = (typeCar) => {
         setListTypeCar([typeCar, ...listTypeCar])
     }
+    const handleEditTypeCarFromModal = (brand) => {
+        let cloneListTypeCar = _.cloneDeep(listTypeCar);
+
+        let index = listTypeCar.findIndex(item => item.id === brand.id);
+        cloneListTypeCar[index].nameType = brand.nameType;
+        cloneListTypeCar[index].description = brand.description;
+        setListTypeCar(cloneListTypeCar);
+    }
 
     //call api getallTypeCar
     useEffect(() => {
@@ -126,11 +134,13 @@ const TableTypeCar = (props) => {
             />
 
             {/* Sua */}
-            {/* <TypeCarEdit
+            <TypeCarEdit
                 show={isShowModalEdit}
                 handleClose={handleClose}
                 dataTypeCarEdit={dataTypeCarEdit}
-            /> */}
+                handleEditTypeCarFromModal={handleEditTypeCarFromModal}
+
+            />
 
             {/* Xoa */}
             <TypeCarDelete

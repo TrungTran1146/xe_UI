@@ -44,10 +44,10 @@ const BrandDelete = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                     <Button variant="primary" onClick={() => confirmDelete()}>
-                        Confirm
+                        Xóa
                     </Button>
                 </Modal.Footer>
             </Modal>

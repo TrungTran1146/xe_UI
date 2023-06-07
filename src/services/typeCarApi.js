@@ -36,9 +36,12 @@ const getTypeCarId = (id) => {
 const postTypeCar = (nameType, description) => {
     return axios.post('/TypeCar/CreateTypeCar', { nameType, description })
 }
+const putTypeCar = (id, nameType, description) => {
+    return axios.put(`/TypeCar/UpdateTypeCar/${id}`, { nameType, description })
+}
 
 const deleteTypeCar = (id) => {
     return axios.delete(`/TypeCar/DeleteTypeCar/${id}`);
 }
 
-export { getAllTypeCar, getTypeCarId, postTypeCar, deleteTypeCar }
+export { getAllTypeCar, getTypeCarId, postTypeCar, putTypeCar, deleteTypeCar }
