@@ -9,16 +9,21 @@ import ProductDelete from './ProductDelete';
 import ProductEdit from './ProductEdit';
 import ProductAddNew from './ProductAddNew';
 import _ from "lodash";
+import { getAllBrand } from '../../services/brandApi';
+import { getAllTypeCar } from '../../services/typeCarApi';
 
 
 const TableProduct = (props) => {
 
     const [listProduct, setListProduct] = useState([]);
+    const [listBrand, setListBrand] = useState([]);
+    const [listTypeCar, setListTypeCar] = useState([]);
+
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
 
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
-    const [dataProductEdit, setDatProductEdit] = useState({});
+    const [dataProductEdit, setDataProductEdit] = useState({});
 
 
     const [isShowDelete, setIsShowDelete] = useState(false);
@@ -36,10 +41,22 @@ const TableProduct = (props) => {
         setListProduct([product, ...listProduct])
     }
 
+    const handleEditProductFromModal = (product) => {
+        let cloneListProduct = _.cloneDeep(listProduct);
+
+        let index = listProduct.findIndex(item => item.id === product.id);
+        cloneListProduct[index].name = product.name;
+
+
+        setListProduct(cloneListProduct);
+    }
+
     //call api getallProduct
     useEffect(() => {
 
         getProduct();
+        getBrand();
+        getTypeCar();
     }, [])
 
     const getProduct = async () => {
@@ -47,11 +64,26 @@ const TableProduct = (props) => {
         if (res && res.data) {
             setListProduct(res.data);
         }
+
     }
 
+
+    const getBrand = async () => {
+        let res = await getAllBrand();
+        if (res && res.data) {
+            setListBrand(res.data)
+        }
+    }
+
+    const getTypeCar = async () => {
+        let res = await getAllTypeCar();
+        if (res && res.data) {
+            setListTypeCar(res.data);
+        }
+    }
     //Sửa sản phẩm
     const handleEditProduct = (product) => {
-        setDatProductEdit(product);
+        setDataProductEdit(product);
         setIsShowModalEdit(true);
     }
 
@@ -85,6 +117,7 @@ const TableProduct = (props) => {
                                     <th>Giá Xe</th>
                                     <th>Ảnh</th>
                                     <th>Trạng Thái</th>
+                                    {/* <th>Hãng xe</th> */}
                                     <th>Số lượng</th>
                                     <th>Mô tả</th>
                                     <th>Hành Động</th>
@@ -130,12 +163,16 @@ const TableProduct = (props) => {
                 show={isShowModalAddNew}
                 handleClose={handleClose}
                 handleUpdateTable={handleUpdateTable}
+                listBrand={listBrand}
+                listTypeCar={listTypeCar}
+
             />
 
             {/* Sua */}
             <ProductEdit
                 show={isShowModalEdit}
                 handleClose={handleClose}
+                handleEditProductFromModal={handleEditProductFromModal}
                 dataProductEdit={dataProductEdit}
             />
 

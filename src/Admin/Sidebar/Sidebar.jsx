@@ -107,7 +107,13 @@ const Sidebar = () => {
                     <li>
                         <Link to="/admin/brand">
                             <AiOutlineTags />
-                            Loại hàng
+                            Hãng xe
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/admin/typecar">
+                            <AiOutlineTags />
+                            Loại xe
                         </Link>
                     </li>
                     <li>

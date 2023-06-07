@@ -1,21 +1,21 @@
 
 import { Button, Modal } from "react-bootstrap";
-import { deleteProduct } from "../../services/productApi";
+import { deleteTypeCar } from "../../services/typeCarApi";
 import { toast } from "react-toastify";
 
-const ProductDelete = (props) => {
-    const { show, handleClose, dataProductDelete, handleDeleteProductFromModal } = props;
+const TypeCarDelete = (props) => {
+    const { show, handleClose, dataTypeCarDelete, handleDeleteTypeCarFromModal } = props;
 
 
 
 
     const confirmDelete = async () => {
-        const res = await deleteProduct(dataProductDelete.id);
-        if (res && +res.status === 200) {
+        const res = await deleteTypeCar(dataTypeCarDelete.id);
 
-            toast.success(`Xóa thành công: ${dataProductDelete.name}`);
+        if (res && +res.status === 200) {
+            toast.success(`Xóa thành công loại xe: ${dataTypeCarDelete.nameType}`);
             handleClose();
-            handleDeleteProductFromModal(dataProductDelete);
+            handleDeleteTypeCarFromModal(dataTypeCarDelete);
         } else {
             toast.error("Xóa thất bại!")
         }
@@ -32,25 +32,25 @@ const ProductDelete = (props) => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Bạn có chắc chắn xóa sản phẩm này không?</Modal.Title>
+                    <Modal.Title>Bạn có chắc chắn xóa loại xe này không?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="body-add-new">
 
-                        <b>Tên xe = {dataProductDelete.name}</b>
+                        <b>Tên loại xe = {dataTypeCarDelete.nameType}</b>
 
 
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Đóng
+                        Close
                     </Button>
                     <Button variant="primary" onClick={() => confirmDelete()}>
-                        Xóa
+                        Confirm
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>);
 };
-export default ProductDelete;
+export default TypeCarDelete;

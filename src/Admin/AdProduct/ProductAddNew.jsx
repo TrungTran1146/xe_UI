@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { postCreateProduct } from "../../services/productApi";
 
 const ProductAddNew = (props) => {
-    const { show, handleClose, handleUpdateTable } = props;
+    const { show, handleClose, handleUpdateTable, listBrand, listTypeCar } = props;
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState();
@@ -13,26 +13,15 @@ const ProductAddNew = (props) => {
     const [status, setStatus] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const [brandId, setBrandId] = useState(8);
-    const [typecarId, setTypeCarId] = useState(2);
+    const [brandId, setBrandId] = useState();
+    const [typeCarId, setTypeCarId] = useState();
 
 
 
-    //Tạo sản phẩm
-    // const newProduct = {
-    //     name: name,
-    //     price: price,
-    //     status: status,
-    //     description: description,
-    //     image: image,
-    //     brandId: brandId,
-    //     typecarId: typecarId
-
-    // };
 
     const handleSaveProduct = async () => {
-        let res = await postCreateProduct(name, price, status, quantity, description, image, brandId, typecarId);
-
+        let res = await postCreateProduct(name, price, status, quantity, description, image, brandId, typeCarId);
+        console.log(res.data)
         if (res && res.data.id) {
             handleClose();
             setName('');
@@ -41,24 +30,19 @@ const ProductAddNew = (props) => {
             setQuantity();
             setDescription('');
             setImage('');
-            setBrandId(8);
-            setTypeCarId(2);
+            setBrandId();
+            setTypeCarId();
             handleUpdateTable({
                 name: name,
                 price: price,
                 quantity: quantity,
                 status: status,
-
                 description: description,
                 image: image,
                 id: res.data.id
             })
             toast.success("Thêm xe thành công!");
             handleClose();
-
-
-
-
         } else {
             toast.error("Thêm xe thất bại!");
         }
@@ -109,6 +93,45 @@ const ProductAddNew = (props) => {
                                 <option value="Hết hàng">Hết hàng</option>
                             </select>
                         </div>
+
+                        <div className="mb-3">
+                            <label htmlFor="status" className="form-label">
+                                Hãng xe
+                            </label>
+
+                            <select
+                                type="text"
+                                className="form-control"
+                                id=""
+                                value={brandId}
+                                onChange={(e) => setBrandId(e.target.value)}
+                            >
+                                <option value="">-- Chọn hãng xe --</option>
+                                {listBrand.map(item => (
+                                    <option key={item.id} value={item.id}>{item.brandName}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="status" className="form-label">
+                                Loại xe
+                            </label>
+
+                            <select
+                                type="text"
+                                className="form-control"
+                                id=""
+                                value={typeCarId}
+                                onChange={(e) => setTypeCarId(e.target.value)}
+                            >
+                                <option value="">-- Chọn loại xe --</option>
+                                {listTypeCar.map(type => (
+                                    <option key={type.id} value={type.id}>{type.nameType}</option>
+                                ))}
+                            </select>
+                        </div>
+
+
                         <div className="mb-3">
                             <label className="form-label">Số lượng</label>
                             <input type="number"
@@ -129,7 +152,7 @@ const ProductAddNew = (props) => {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">
-                                Description
+                                Mô tả
                             </label>
                             <textarea
                                 className="form-control"
@@ -144,10 +167,10 @@ const ProductAddNew = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                     <Button variant="primary" onClick={() => handleSaveProduct()}>
-                        Save Changes
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>

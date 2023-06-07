@@ -5,15 +5,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import { putUpdateProduct } from "../../services/productApi";
 
 const ProductEdit = (props) => {
-    const { show, handleClose, dataProductEdit } = props;
+    const { show, handleClose, dataProductEdit, handleEditProductFromModal } = props;
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState();
     const [status, setStatus] = useState('');
+    const [quantity, setQuantity] = useState();
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [brandId, setBrandId] = useState(8);
-    const [typecarId, setTypeCarId] = useState(2);
+    const [typeCarId, setTypeCarId] = useState(2);
 
 
 
@@ -24,38 +25,57 @@ const ProductEdit = (props) => {
             setName(dataProductEdit.name);
             setPrice(dataProductEdit.price);
             setStatus(dataProductEdit.status);
+            setQuantity(dataProductEdit.quantity);
             setDescription(dataProductEdit.description);
             setImage(dataProductEdit.image);
+            setBrandId(dataProductEdit.brandId);
+            setTypeCarId(dataProductEdit.typeCarId);
 
         }
     }, [dataProductEdit]);
 
-    const editProduct = {
-        name: name,
-        price: price,
-        status: status,
-        description: description,
-        image: image,
-        // brandId,
-        // typecarId
+    // console.log('check', dataProductEdit)
 
-    };
-    console.log(dataProductEdit.id, name, price, status, description, image);
+    // const editProduct = {
+    //     name: name,
+    //     price: price,
+    //     status: status,
+    //     description: description,
+    //     image: image,
+    //     brandId: brandId,
+    //     typeCarId: typeCarId
+
+    // };
+    // console.log('check edit', editProduct)
     const handleEditProduct = async () => {
-        const res = await putUpdateProduct(dataProductEdit.id, editProduct);
-        console.log(res);
+
+        const res = await putUpdateProduct(dataProductEdit.id, name, price, status, quantity, description, image, brandId, typeCarId);
+        console.log(res.data)
+        if (res && res.data.id) {
+            handleClose();
+            handleEditProductFromModal({
+                name: name,
+                price: price,
+                quantity: quantity,
+                status: status,
+                description: description,
+                image: image,
+                id: dataProductEdit.id
+            })
+            toast.success("Sửa thông tin thành công!");
+            handleClose();
+        } else {
+            toast.error("Sửa thông tin thất bại!");
+        }
+
     }
 
 
     return (
         <>
-            <Modal show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Sửa sản phẩm</Modal.Title>
+                    <Modal.Title>Thêm sản phẩm</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="body-add-new">
@@ -89,12 +109,21 @@ const ProductEdit = (props) => {
                                 value={status}
                                 onChange={(e) => setStatus(e.target.value)}
                             >
-                                {/* <option value="">-- Select Status --</option> */}
+                                <option value="">-- Chọn trạng thái --</option>
                                 <option value="Còn hàng">Còn hàng</option>
                                 <option value="Hết hàng">Hết hàng</option>
                             </select>
                         </div>
 
+                        <div className="mb-3">
+                            <label className="form-label">Số lượng</label>
+                            <input type="number"
+                                className="form-control"
+                                placeholder="Nhập số lượng xe "
+                                value={quantity}
+                                onChange={(event) => setQuantity(event.target.value)} />
+
+                        </div>
                         <div className="mb-3">
                             <label className="form-label">Ảnh</label>
                             <input type="text"
@@ -106,7 +135,7 @@ const ProductEdit = (props) => {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">
-                                Description
+                                Mô tả
                             </label>
                             <textarea
                                 className="form-control"
@@ -116,14 +145,15 @@ const ProductEdit = (props) => {
                                 onChange={(e) => setDescription(e.target.value)}
                             ></textarea>
                         </div>
+
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                     <Button variant="primary" onClick={() => handleEditProduct()}>
-                        Confirm
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>

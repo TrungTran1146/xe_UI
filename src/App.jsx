@@ -11,6 +11,7 @@ import AdminPage from "./Admin/AdminPage";
 import { CartContext } from "./Contexts/CartContext";
 import ADProductPage from "./Admin/AdminPage/ADProductPage";
 import BrandPage from "./Admin/AdminPage/BrandPage";
+import TypeCarPage from "./Admin/AdminPage/TypeCarPage";
 import OrderPage from "./Admin/AdminPage/OrderPage";
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -34,7 +35,8 @@ function App() {
             <Route path="/admin/product" element={<ADProductPage />} />
             <Route path="/admin/order" element={<OrderPage />} />
             <Route path="/admin/brand" element={<BrandPage />} />
-            <Route path="/admin/nhapxe" element={<BrandPage />} />
+            <Route path="/admin/typecar" element={<TypeCarPage />} />
+            {/* <Route path="/admin/nhapxe" element={<BrandPage />} /> */}
           </Routes>
         </Router>
 
