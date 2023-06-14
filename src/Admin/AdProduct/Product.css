@@ -29,3 +29,28 @@
     background-color: transparent !important;
     color: orange !important;
 }
+
+.image {
+    width: 100px;
+    height: 100px;
+}
+
+/* hover */
+.image {
+    /* width: 250px;
+    height: 300px; */
+    width: 100px;
+    height: 100px;
+    /* background: orange; */
+    margin: 0px 10px;
+    transition: 1s;
+
+}
+
+.image:hover {
+    transform: scale(2);
+    /* background: #ff800a; */
+    z-index: 2;
+    box-shadow: 2px 2px 2px #000;
+
+}

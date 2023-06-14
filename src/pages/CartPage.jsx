@@ -7,11 +7,14 @@ import Cart from "../components/Cart/Cart.jsx";
 
 const CartPage = () => {
   return (
-    <div>
+
+    <>
       <Navbar />
       <Cart />
       <Footer />
-    </div>
+    </>
+
+
   );
 };
 

@@ -1,4 +1,5 @@
-import axiosClient from "./axios";
+
+
 import axios from "./axios";
 
 // const cartApi = {
@@ -25,27 +26,36 @@ import axios from "./axios";
 
 // }
 // export default cartApi;
-const fetchAllCart = () => {
+const getAllCart = () => {
     return axios.get("/Cart/GetCartAll");
 }
 
-const fetchCartID = (id) => {
-    return axios.get(`/Cart/GetCartByID/${id}`);
+// const getCartID = (id) => {
+//     return axios.get(`/Cart/GetCartByID/${id}`);
+// }
+const postCreateCart = (quantity, productId, name, image, price) => {
+    const formData = new FormData();
+    formData.append('quantity', quantity);
+    formData.append('productId', productId);
+    formData.append('name', name);
+    formData.append('image', image);
+    formData.append('price', price);
+    var data = {};
+    formData.forEach(function (value, key) {
+        data[key] = value;
+    });
+
+    return axios.post("/Cart/CreateCart", data);
 }
-const fetchCreateCart = (id) => {
-    return axios.get(`/Cart/CreateCart`);
-}
-const fetchUpdateCart = (data) => {
-    return axios.get(`/Cart/UpdateCart/${data.id}`);
-}
-const fetchDeteteCart = (id) => {
-    return axios.get(`/Cart/UpdateCart/${id}`);
+// const putUpdateCart = (data) => {
+//     return axios.put(`/Cart/UpdateCart/${id}`);
+// }
+const deteteCart = (id) => {
+    return axios.delete(`/Cart/DeleteCart/${id}`);
 }
 
 export {
-    fetchAllCart,
-    fetchCartID,
-    fetchCreateCart,
-    fetchUpdateCart,
-    fetchDeteteCart
+    getAllCart,
+    postCreateCart,
+    deteteCart
 }

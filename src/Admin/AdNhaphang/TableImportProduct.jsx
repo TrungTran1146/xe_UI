@@ -1,28 +1,28 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
 
-import { getAllTypeCar } from '../../services/typeCarApi';
+import { getAllImportProduct } from '../../services/importProductApi';
 import { Button } from 'bootstrap';
-import './TypeCar.css';
+import './importProduct.css';
 
-import TypeCarDelete from './TypeCarDelete';
-import TypeCarEdit from './TypeCarEdit';
-import TypeCarAddNew from './TypeCarAddNew';
+import ImportProductDelete from './ImportProductDelete';
+import ImportProductEdit from './ImportProductEdit';
+import ImportProductAddNew from './ImportProductAddNew';
 import _ from "lodash";
 
 
 const TableImportProduct = (props) => {
 
-    const [listTypeCar, setListTypeCar] = useState([]);
+    const [listImportProduct, setListImportProduct] = useState([]);
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
 
 
     const [isShowModalEdit, setIsShowModalEdit] = useState(false);
-    const [dataTypeCarEdit, setDataTypeCarEdit] = useState({});
+    const [dataImportProductEdit, setDataImportProductEdit] = useState({});
 
 
     const [isShowDelete, setIsShowDelete] = useState(false);
-    const [dataTypeCarDelete, setDataTypeCarDelete] = useState({})
+    const [dataImportProductDelete, setDataImportProductDelete] = useState({})
 
 
 
@@ -32,47 +32,47 @@ const TableImportProduct = (props) => {
         setIsShowDelete(false);
     }
 
-    const handleUpdateTable = (typeCar) => {
-        setListTypeCar([typeCar, ...listTypeCar])
+    const handleUpdateTable = (importProduct) => {
+        setListImportProduct([importProduct, ...listImportProduct])
     }
-    const handleEditTypeCarFromModal = (brand) => {
-        let cloneListTypeCar = _.cloneDeep(listTypeCar);
+    // const handleEditImportProductFromModal = (brand) => {
+    //     let cloneListImportProduct = _.cloneDeep(listImportProduct);
 
-        let index = listTypeCar.findIndex(item => item.id === brand.id);
-        cloneListTypeCar[index].nameType = brand.nameType;
-        cloneListTypeCar[index].description = brand.description;
-        setListTypeCar(cloneListTypeCar);
-    }
+    //     let index = listImportProduct.findIndex(item => item.id === brand.id);
+    //     cloneListImportProduct[index].nameType = brand.nameType;
+    //     cloneListImportProduct[index].description = brand.description;
+    //     setListImportProduct(cloneListImportProduct);
+    // }
 
-    //call api getallTypeCar
+    //call api getallImportProduct
     useEffect(() => {
 
-        getTypeCar();
+        getImportProduct();
     }, [])
 
-    const getTypeCar = async () => {
-        let res = await getAllTypeCar();
+    const getImportProduct = async () => {
+        let res = await getAllImportProduct();
         if (res && res.data) {
-            setListTypeCar(res.data)
+            setListImportProduct(res.data)
         }
     }
 
     //Sửa sản phẩm
-    const handleEditTypeCar = (typeCar) => {
-        setDataTypeCarEdit(typeCar);
+    const handleEditImportProduct = (importProduct) => {
+        setDataImportProductEdit(importProduct);
         setIsShowModalEdit(true);
     }
 
     //Xóa Sản phẩm
-    const handleDeleteTypeCar = (typeCar) => {
+    const handleDeleteImportProduct = (importProduct) => {
         setIsShowDelete(true);
-        setDataTypeCarDelete(typeCar);
+        setDataImportProductDelete(importProduct);
 
     }
-    const handleDeleteTypeCarFromModal = (typeCar) => {
-        let cloneListTypeCar = _.cloneDeep(listTypeCar);
-        cloneListTypeCar = cloneListTypeCar.filter(item => item.id !== typeCar.id);
-        setListTypeCar(cloneListTypeCar);
+    const handleDeleteImportProductFromModal = (importProduct) => {
+        let cloneListImportProduct = _.cloneDeep(listImportProduct);
+        cloneListImportProduct = cloneListImportProduct.filter(item => item.id !== importProduct.id);
+        setListImportProduct(cloneListImportProduct);
     }
     return (
         <>
@@ -81,7 +81,6 @@ const TableImportProduct = (props) => {
                 <div className=''>
                     <div className=''>
                         <div className='my-3 add-new'>
-                            <h1>Quản lý loại xe</h1>
                             <button className='btn btn-danger d-flex justify-content-end'
                                 onClick={() => setIsShowModalAddNew(true)}
                             >Thêm loại xe</button>
@@ -97,22 +96,22 @@ const TableImportProduct = (props) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {listTypeCar && listTypeCar.length > 0 &&
-                                    listTypeCar.map((item, index) => {
+                                {listImportProduct && listImportProduct.length > 0 &&
+                                    listImportProduct.map((item, index) => {
                                         return (
-                                            <tr key={`typeCar-${index}`}>
+                                            <tr key={`importProduct-${index}`}>
                                                 <td>{item.id}</td>
                                                 <td>{item.nameType}</td>
 
                                                 <td>{item.description}</td>
                                                 <td>
                                                     <button className='btn-edit'
-                                                        onClick={() => handleEditTypeCar(item)}
+                                                        onClick={() => handleEditImportProduct(item)}
                                                     ><i className="bi bi-pencil "></i>
                                                     </button>
 
                                                     <button className='btn-delete '
-                                                        onClick={() => handleDeleteTypeCar(item)}
+                                                        onClick={() => handleDeleteImportProduct(item)}
                                                     ><i className="bi bi-trash-fill "></i>
                                                     </button>
                                                 </td>
@@ -128,28 +127,28 @@ const TableImportProduct = (props) => {
 
 
             {/* Them */}
-            <TypeCarAddNew
+            {/* <ImportProductAddNew
                 show={isShowModalAddNew}
                 handleClose={handleClose}
                 handleUpdateTable={handleUpdateTable}
-            />
+            /> */}
 
             {/* Sua */}
-            <TypeCarEdit
+            {/* <ImportProductEdit
                 show={isShowModalEdit}
                 handleClose={handleClose}
-                dataTypeCarEdit={dataTypeCarEdit}
-                handleEditTypeCarFromModal={handleEditTypeCarFromModal}
+                dataImportProductEdit={dataImportProductEdit}
+                handleEditImportProductFromModal={handleEditImportProductFromModal}
 
-            />
+            /> */}
 
             {/* Xoa */}
-            <TypeCarDelete
+            {/* <ImportProductDelete
                 show={isShowDelete}
                 handleClose={handleClose}
-                dataTypeCarDelete={dataTypeCarDelete}
-                handleDeleteTypeCarFromModal={handleDeleteTypeCarFromModal}
-            />
+                dataImportProductDelete={dataImportProductDelete}
+                handleDeleteImportProductFromModal={handleDeleteImportProductFromModal}
+            /> */}
         </>
 
     )

@@ -8,28 +8,69 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
-
+import { getAllCart, postCreateCart, deteteCart } from "../../services/cartApi";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const ProductDetail = (props) => {
   const [product, setProduct] = useState(null);
+  const [isAdded, setAdded] = useState(false);
+  const [quantity, setQuantityCart] = useState(1);
+  const [productId, setProductId] = useState(0);
+  const [name, setNameCart] = useState("");
+  const [image, setImageCart] = useState();
+  const [price, setPriceCart] = useState();
+  const [totalCart, setTotalCart] = useState(0);
+
+  // const [potstCart, setPostCart] = useState();
+
   const { id } = useParams();
   useEffect(() => {
     loadProduct();
+    // createCart();
   }, []);
 
   const loadProduct = async () => {
     const response = await getProductID(id);
     setProduct(response.data);
+    setProductId(response.data.id);
+    setNameCart(response.data.name);
+    setImageCart(response.data.image);
+    setPriceCart(response.data.price);
+
   }
+
+  const createCart = async () => {
+
+
+    // console.log('tt', res)
+
+
+  }
+
 
   if (!product) {
     return null;
   }
 
-  const handleCart = () => {
 
+  const handleAddCart = async () => {
+    setAdded(true);
+
+    // setQuantityCart(quantity + 1);
+    let res = await postCreateCart(quantity, productId, name, image, price);
+    if (res && res.data) {
+      toast.success("Thêm xe vào giỏ hàng thành công!");
+
+
+    } else {
+      toast.error("Thêm xe vào giỏ hàng thất bại!");
+    }
+    // setTotalCart(totalCart + 1);
+
+    // createCart();
   }
+
   return (
     <>
       <section className="py-5">
@@ -38,7 +79,7 @@ const ProductDetail = (props) => {
             <div className="col-md-6">
               <img
                 className="card-img-top mb-5 mb-md-0"
-                src="https://cdn.honda.com.vn/motorbikes/September2022/wv6DBlyu0DLd4DeEFQVU.jpg"
+                src={product.image}
                 alt="..." />
             </div>
             <div className="col-md-6">
@@ -49,30 +90,38 @@ const ProductDetail = (props) => {
               <div className="fs-5 mb-2">
                 <span>Trạng thái: {product.status}</span>
               </div>
+              <div className="fs-5 mb-2">
+                <span>Số lượng còn lại: {product.quantity} xe</span>
+              </div>
               <p className="lead">
                 Mô tả: {product.description}
               </p>
               <div className="d-flex">
-                <button className="btn btn-primary btn-minus">
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-                <input
-                  className="form-control text-center"
-                  name="product-quanity"
-                  id="product-quanity"
-                  type="num"
-                  value="1"
-                  style={{ maxWidth: `3rem` }} />
-                <button className="btn btn-primary btn-plus">
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-                <button
-                  className="btn btn-outline-primary flex-shrink-0 ms-3"
-                  type="button"
-                  onClick={handleCart()}>
-                  <FontAwesomeIcon icon={faCartShopping} className="me-2" />
-                  Thêm vào giỏ hàng
-                </button>
+
+
+                {/* // */}
+                {isAdded ?
+                  (<button
+                    className="btn btn-outline-primary flex-shrink-0 ms-3"
+                    type="button"
+
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} className="me-2"
+                    />
+                    Đã vào giỏ hàng
+                  </button>)
+                  :
+                  (<button
+                    className="btn btn-outline-primary flex-shrink-0 ms-3"
+                    type="button"
+
+                    onClick={handleAddCart}>
+                    <FontAwesomeIcon icon={faCartShopping} className="me-2"
+                    />
+                    Thêm vào giỏ hàng
+                  </button>)
+                }
+                {/* // */}
               </div>
             </div>
           </div>

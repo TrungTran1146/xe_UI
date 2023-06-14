@@ -143,8 +143,8 @@ const Footer = () => {
       </section>
 
       <div
-        className="text-center p-4"
-        style={{ backgroundColor: `rgba(0, 0, 0, 0.05);` }}
+        className="footer text-center p-4"
+
       >
 
         <p>© 2023 BẢN QUYỀN THUỘC VỀ TRẦN NGỌC TRUNG</p>

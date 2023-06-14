@@ -9,10 +9,20 @@ export const loginUser = async (user, dispatch, navigate) => {
         const res = await axios.post("/login", user);
 
         dispatch(loginSuccess(res.data));
-        console.table(res.data);
+        console.log('check', res.data.data);
         // localStorage.setItem("tokens",  JSON.stringify(res.data));
         // setUser(jwt_decode(res.data.access_token));
-        navigate("/");
+        localStorage.setItem('access_token', res.data.data.token);
+
+        // Redirect đến trang dành cho user phù hợp (admin hoặc người dùng)
+        if (res.data.data.role === 'admin') {
+            // Redirect đến trang admin
+            navigate("/admin");
+        } else {
+            // Redirect đến trang user
+            navigate("/");
+        }
+
     } catch (err) {
         dispatch(loginFailed());
     }

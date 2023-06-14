@@ -5,11 +5,11 @@ import Login from "../components/Login/Login.jsx";
 
 const LoginPage = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Login />
       <Footer />
-    </div>
+    </>
   );
 };
 

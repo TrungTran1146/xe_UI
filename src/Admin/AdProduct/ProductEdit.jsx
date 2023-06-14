@@ -12,13 +12,16 @@ const ProductEdit = (props) => {
     const [status, setStatus] = useState('');
     const [quantity, setQuantity] = useState();
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState();
     const [brandId, setBrandId] = useState(8);
     const [typeCarId, setTypeCarId] = useState(2);
 
 
 
 
+    const handleImage = (event) => {
+        setImage(event.target.files[0]);
+    };
 
     useEffect(() => {
         if (show) {
@@ -37,6 +40,7 @@ const ProductEdit = (props) => {
     const handleEditProduct = async () => {
 
         const res = await putUpdateProduct(dataProductEdit.id, name, price, status, quantity, description, image, brandId, typeCarId);
+        console.log('check', res.data)
         if (res && res.data.id) {
             handleClose();
             handleEditProductFromModal({
@@ -55,7 +59,6 @@ const ProductEdit = (props) => {
         }
 
     }
-
 
     return (
         <>
@@ -112,11 +115,12 @@ const ProductEdit = (props) => {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Ảnh</label>
-                            <input type="text"
+                            <input type="file"
                                 className="form-control"
                                 placeholder="Chọn ảnh"
-                                value={image}
-                                onChange={(event) => setImage(event.target.value)} />
+                                name="image"
+                                // value={image}
+                                onChange={handleImage} />
 
                         </div>
                         <div className="mb-3">

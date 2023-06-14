@@ -7,12 +7,12 @@ import ProductDetail from "../components/Product/ProductDetail.jsx";
 
 const ProductPage = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <ProductDetail />
-      <Service />
+      {/* <Service /> */}
       <Footer />
-    </div>
+    </>
   );
 };
 

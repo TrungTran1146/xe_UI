@@ -39,10 +39,33 @@
     display: block;
     padding: 10px;
     color: #333;
+
 }
 
-.components li a:hover,
-.components li a.active {
+
+/* .components li a:active {
     background-color: #007bff;
     color: #fff;
+}
+
+/* .components li :hover, */
+.components li a:focus {
+    color: black;
+    /* box-shadow: 0 0 5px #5df107;
+    text-shadow: 0 0 5px #5df107; */
+    background: #5df107;
+
+}
+
+
+
+.components li a:hover::before {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #5df107;
+}
+
+.components li a:hover {
+    color: black;
+    box-shadow: 0 0 5px #5df107;
+    text-shadow: 0 0 5px #5df107;
 }

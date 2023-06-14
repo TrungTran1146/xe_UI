@@ -5,11 +5,11 @@ import Register from "../components/Register/Register.jsx";
 
 const RegisterPage = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Register />
       <Footer />
-    </div>
+    </>
   );
 };
 

@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import "./Cart.css";
+import { getAllCart } from "../../services/cartApi";
 const Cart = () => {
+  const [listCart, setListCart] = useState([]);
+
+  useEffect(() => {
+
+    allCart();
+
+  }, [])
+
+  console.log(listCart)
+
+  const allCart = async () => {
+    let res = await getAllCart();
+    if (res && res.data)
+      setListCart(res.data);
+  }
+  const handleDeleteBrand = () => {
+    alert("trung ne")
+  }
+
   return (
     <div className="cart">
       <section className="h-100 h-custom" style={{ backgroundColor: `#eee` }}>
@@ -45,8 +65,48 @@ const Cart = () => {
                           </p>
                         </div>
                       </div>
+                      {/*  */}
+                      {listCart && listCart.length > 0 &&
+                        listCart.map((cart) => {
+                          return (
+                            <div key={cart.id} class="card mb-3">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                  <div class="d-flex flex-row align-items-center">
+                                    <div>
+                                      <img
+                                        src={cart.image}
+                                        class="img-fluid rounded-3"
+                                        alt=''
+                                        style={{ width: `65px` }}
+                                      />
+                                    </div>
+                                    <div class="ms-3">
+                                      <h5>{cart.name}</h5>
 
+                                    </div>
+                                  </div>
+                                  <div class="d-flex  align-items-center">
+                                    <div style={{ width: `50px` }}>
+                                      <h5 class="fw-normal mb-0">Số lượng: {cart.quantity}</h5>
+                                    </div>
+                                    <div style={{ width: `80px` }}>
+                                      <h5 class="mb-0">{cart.price}VNĐ</h5>
+                                    </div>
 
+                                  </div>
+                                  <button className='btn-delete '
+                                    onClick={() => handleDeleteBrand(cart)}
+                                  ><i className="bi bi-trash-fill "></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          )
+
+                        })}
+
+                      {/*  */}
 
 
 

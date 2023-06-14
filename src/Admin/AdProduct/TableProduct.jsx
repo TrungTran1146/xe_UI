@@ -108,6 +108,7 @@ const TableProduct = (props) => {
                 <div className=''>
                     <div className=''>
                         <div className='my-3 add-new'>
+                            <h1>Quản lý sản phẩm</h1>
                             <button className='btn btn-danger d-flex justify-content-end'
                                 onClick={() => setIsShowModalAddNew(true)}
                             >Thêm sản phẩm</button>
@@ -135,7 +136,14 @@ const TableProduct = (props) => {
                                                 <td>{item.id}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.price}</td>
-                                                <td>{item.image}</td>
+                                                <td>
+                                                    <img
+                                                        className="image"
+                                                        src={item.image}
+                                                        // "https://cdn.honda.com.vn/motorbikes/September2022/wv6DBlyu0DLd4DeEFQVU.jpg"
+
+                                                        alt="..." />
+                                                </td>
                                                 <td>{item.status}</td>
                                                 <td>{item.quantity}</td>
                                                 <td>{item.description}</td>

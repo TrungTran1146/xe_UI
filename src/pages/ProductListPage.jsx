@@ -9,14 +9,13 @@ import Service from "../components/Service/Service.jsx";
 
 const ProductListPage = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Slider />
       <ProductList />
-      {/* <Product /> */}
-      <Service />
+      {/* <Service /> */}
       <Footer />
-    </div>
+    </>
   );
 };
 

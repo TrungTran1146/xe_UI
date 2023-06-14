@@ -12,13 +12,13 @@ const ProductAddNew = (props) => {
     const [quantity, setQuantity] = useState();
     const [status, setStatus] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
     const [brandId, setBrandId] = useState();
     const [typeCarId, setTypeCarId] = useState();
+    const [image, setFile] = useState();
 
-
-
-
+    const changeHandler = (event) => {
+        setFile(event.target.files[0]);
+    };
     const handleSaveProduct = async () => {
         let res = await postCreateProduct(name, price, status, quantity, description, image, brandId, typeCarId);
         console.log(res.data)
@@ -29,7 +29,7 @@ const ProductAddNew = (props) => {
             setStatus('');
             setQuantity();
             setDescription('');
-            setImage('');
+            setFile();
             setBrandId();
             setTypeCarId();
             handleUpdateTable({
@@ -143,12 +143,11 @@ const ProductAddNew = (props) => {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Ảnh</label>
-                            <input type="text"
+                            <input type="file"
                                 className="form-control"
+                                name="image"
                                 placeholder="Chọn ảnh"
-                                value={image}
-                                onChange={(event) => setImage(event.target.value)} />
-
+                                onChange={changeHandler} />
                         </div>
                         <div className="mb-3">
                             <label className="form-label">

@@ -1,28 +1,59 @@
-import React, { useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-// import productApi from "../../services/productApi";
+import React, { useEffect, useState } from "react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
+// import { faStar } from "@fortawesome/free-solid-svg-icons";
+// // import productApi from "../../services/productApi";
 
 import './Product.css';
-import { getAllProduct } from "../../services/productApi";
+import { getAllProduct, getTypeProduct } from "../../services/productApi";
 import { Link } from "react-router-dom";
+import { getAllTypeCar } from "../../services/typeCarApi";
 
 
 const ProductList = () => {
 
-  const [products, setAllProduct] = React.useState([]);
+  const [listTypeCar, setListTypeCar] = useState([]);
+  const [selectTypeProduct, setSelectTypeProduct] = useState('all');
+  const [selectTypeCarProduct, setSelectTypeCarProduct] = useState([]);
+
 
 
   useEffect(() => {
 
-    getAllProducts();
+    allProduct();
+    getTypeCar();
+    typeProduct();
   }, [])
-  const getAllProducts = async () => {
+  const typeProduct = async () => {
+
+  }
+
+  const getTypeCar = async () => {
+    let res = await getAllTypeCar();
+    if (res && res.data) {
+      setListTypeCar(res.data);
+    }
+  }
+
+
+  const allProduct = async () => {
     let res = await getAllProduct();
     if (res && res.data)
-      setAllProduct(res.data);
+      setSelectTypeCarProduct(res.data);
   }
+
+  const handleTypeProduct = async (event) => {
+    setSelectTypeProduct(event.target.value);
+    if (selectTypeProduct !== 'all') {
+      const res = await getTypeProduct(selectTypeProduct);
+      if (res && res.data) {
+        setSelectTypeCarProduct(res.data);
+      }
+    } else {
+      allProduct();
+    }
+  }
+
   return (
     <>
 
@@ -33,20 +64,37 @@ const ProductList = () => {
         </div>
       </div >
 
+      <div className="container">
+        <h2 >Chọn loại xe:</h2>
+        <div>
+          <button key='all'
+            className="hide-product btn-outline-filter btn-option mr-4 btn-category"
+            onClick={(e) => handleTypeProduct(e)}
+            value='all'>Tất cả</button>
+          {listTypeCar.map((item) => {
+            return (
+              <button key={item.id}
+                className="hide-product btn-outline-filter btn-option mr-4 btn-category"
+                onClick={(e) => handleTypeProduct(e)}
+                value={item.id}
+              >{item.nameType}</button>
+            )
+          })}
+        </div>
+
+      </div>
       {/* Sản phẩm */}
       <div className="container">
         < div className="row " >
-          {products.map((product) => {
+          {selectTypeCarProduct.map((product) => {
             return (
-              <div className="col-md-6 col-lg-4 col-xl-3">
-                <div key={product.id}>
+              <div key={product.id} className="col-md-6 col-lg-4 col-xl-3">
+                <div >
                   <div className="my-3 bg-light">
                     <div className="card ">
                       <img
                         className="card-img-top"
-                        src=
-                        "https://cdn.honda.com.vn/motorbikes/September2022/wv6DBlyu0DLd4DeEFQVU.jpg"
-                        // {Image}
+                        src={product.image}
                         alt="..." />
                       {/* Giá và tên */}
                       <div className="card-body p-4">

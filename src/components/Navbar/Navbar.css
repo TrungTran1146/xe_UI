@@ -13,3 +13,8 @@
     right: 0 !important;
     z-index: 1;
 }
+
+.nav1 li a:hover,
+.nav1 li a:focus {
+    color: black !important;
+}

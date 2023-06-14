@@ -11,14 +11,14 @@ import Home from "../components/Home/Home.jsx";
 
 const HomePage = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Slider />
       <Home />
 
       <Service />
       <Footer />
-    </div>
+    </>
   );
 };
 
