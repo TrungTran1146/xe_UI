@@ -5,16 +5,16 @@
     margin-left: -175px;
 }
 
-.header {
+/* .header {
     height: 70px !important;
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     z-index: 1;
-}
+} */
 
 .nav1 li a:hover,
 .nav1 li a:focus {
-    color: black !important;
+    color: rgb(201, 16, 16) !important;
 }

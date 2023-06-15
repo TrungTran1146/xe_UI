@@ -14,7 +14,7 @@ const CartDelete = (props) => {
         const res = await deleteCart(dataCartDelete.id);
 
         if (res && +res.status === 200) {
-            toast.success(`Xóa thành công xe: ${dataCartDelete.brandName} khỏi giỏ hàng!`);
+            toast.success(`Xóa thành công xe: ${dataCartDelete.name} khỏi giỏ hàng!`);
             handleClose();
             handleDeleteCartFromModal(dataCartDelete);
         } else {

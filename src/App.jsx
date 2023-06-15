@@ -14,7 +14,7 @@ import BrandPage from "./Admin/AdminPage/BrandPage";
 import TypeCarPage from "./Admin/AdminPage/TypeCarPage";
 import OrderPage from "./Admin/AdminPage/OrderPage";
 import ImportProductPage from "./Admin/AdminPage/ImportProductPage";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -45,7 +45,7 @@ function App() {
 
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

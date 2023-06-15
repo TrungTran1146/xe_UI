@@ -100,7 +100,7 @@ const ProductList = () => {
                       <div className="card-body p-4">
                         <div className="text-center">
                           <h5 className="fw-bolder text-danger">{product.name}</h5>
-                          {product.price} VNĐ
+                          {product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                         </div>
                       </div>
 

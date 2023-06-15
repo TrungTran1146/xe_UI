@@ -81,7 +81,7 @@ const TableImportProduct = (props) => {
                 <div className=''>
                     <div className=''>
                         <div className='my-3 add-new'>
-                            <h1>Quản lý loại xe</h1>
+                            <h1 className='text-center'>Quản lý loại xe</h1>
                             <button className='btn btn-danger d-flex justify-content-end'
                                 onClick={() => setIsShowModalAddNew(true)}
                             >Thêm loại xe</button>

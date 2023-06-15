@@ -8,27 +8,77 @@ import { deleteCart, getAllCart } from "../../services/cartApi";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import CartDelete from "./CartDelete";
+import { apiPostOrder } from "../../services/orderApi";
+import { useNavigate } from "react-router-dom";
+// const history = useHistory();
+
 
 const Cart = () => {
   const [listCart, setListCart] = useState([]);
 
   const [isShowDelete, setIsShowDelete] = useState(false);
   const [dataCartDelete, setDataCartDelete] = useState({})
-  useEffect(() => {
 
+  const [total, setTotal] = useState(0);
+  const [quantityOrder, setQuantityOrder] = useState(0);
+
+  const [status, setStatus] = useState('Chưa thanh toán')
+  const [date, setDate] = useState(new Date());
+  const [address, setAddress] = useState();
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [checkID, setCheckIdUser] = useState();
+
+  const navigate = useNavigate();
+  useEffect(() => {
     allCart();
 
+    checkIdUsers();
   }, [])
 
 
+  const checkIdUsers = () => {
+    var idUser = localStorage.getItem('id');
+    setCheckIdUser(idUser);
+  }
 
+
+  const getTotal = async (data) => {
+    let tol = 0;
+    let quan = 0;
+    data.forEach(p => {
+      tol += p.price;
+      quan += p.quantity;
+    })
+    setQuantityOrder(quan);
+    setTotal(tol);
+  }
+  //GỌi API
   const allCart = async () => {
     let res = await getAllCart();
-    if (res && res.data)
+    if (res && res.data) {
       setListCart(res.data);
+      getTotal(res.data)
+    }
   }
-  const handleClose = () => {
 
+  // console.log('thoi gian', date.toLocaleString());
+
+
+  console.log('dsd', checkID, name, phone, address, date.toLocaleString(), status, quantityOrder, total)
+  const postOrder = async () => {
+    let res = await apiPostOrder(checkID, name, phone, address, date.toLocaleString(), status, quantityOrder, total);
+    console.log(res.data);
+
+    if (res && res.data) {
+      toast.success("Đặt hàng thành công!");
+    }
+    else {
+      toast.error("Đặt hàng thất bại!");
+    }
+  }
+
+  const handleClose = () => {
     setIsShowDelete(false);
   }
 
@@ -36,11 +86,31 @@ const Cart = () => {
   const handleDeleteCart = async (cart) => {
     setIsShowDelete(true);
     setDataCartDelete(cart);
+
   }
   const handleDeleteCartFromModal = (cart) => {
-    let cloneListCart = _.cloneDeep(listCart);
-    cloneListCart = cloneListCart.filter(item => item.id !== cart.id);
-    setListCart(cloneListCart);
+    allCart();
+  }
+
+
+  const handleBuyCart = () => {
+
+    const token = localStorage.getItem('access_token');
+
+    if (!token) {
+      toast.warning("Bạn chưa đăng nhập vào trang web!")
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    }
+
+    console.log('dsd', checkID, name, phone, address, date.toLocaleString(), status, quantityOrder, total)
+
+    // setTimeout(() => {
+    postOrder();
+
+    // }, 1000);
+
   }
   return (
     <>
@@ -67,7 +137,7 @@ const Cart = () => {
 
                         <div className="d-flex justify-content-between align-items-center mb-4">
                           <div>
-                            <p className="mb-1">Giỏ hàng</p>
+                            <p className="mb-1">Thông tin giỏ hàng của bạn</p>
                             {/* <p className="mb-0">Bạn đang có 4 sản phẩm trong giỏ hàng</p> */}
                           </div>
                           <div>
@@ -87,29 +157,30 @@ const Cart = () => {
                         {listCart && listCart.length > 0 &&
                           listCart.map((cart) => {
                             return (
-                              <div key={cart.id} class="card mb-3">
-                                <div class="card-body">
-                                  <div class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row align-items-center">
-                                      <div>
-                                        <img
-                                          src={cart.image}
-                                          class="img-fluid rounded-3"
-                                          alt=''
-                                          style={{ width: `65px` }}
-                                        />
-                                      </div>
-                                      <div class="ms-3">
+                              <div key={cart.id} className="card mb-3">
+                                <div className="card-body">
+                                  <div className="d-flex justify-content-between">
+                                    <div className="d-flex flex-row align-items-center">
+                                      {/* <div > */}
+                                      <img
+                                        src={cart.image}
+                                        className="image img-fluid rounded-3"
+                                        alt=''
+                                        style={{ width: `100px` }}
+                                      />
+                                      {/* </div> */}
+                                      <div className="ms-3">
                                         <h5>{cart.name}</h5>
 
                                       </div>
                                     </div>
-                                    <div class="d-flex  align-items-center">
-                                      <div style={{ width: `50px` }}>
-                                        <h5 class="fw-normal mb-0">Số lượng: {cart.quantity}</h5>
+                                    <div className="d-flex  align-items-center">
+                                      <div style={{ width: `150px` }}>
+                                        <h6 className="">Số lượng: {cart.quantity}</h6>
                                       </div>
-                                      <div style={{ width: `80px` }}>
-                                        <h5 class="mb-0">{cart.price}VNĐ</h5>
+                                      <div style={{ width: `100px` }}>
+
+                                        <h6 >{cart.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</h6>
                                       </div>
 
                                     </div>
@@ -123,7 +194,9 @@ const Cart = () => {
                             )
 
                           })}
-
+                        <hr />
+                        <div className="font-weight-bold fs-4">Số lượng: {quantityOrder} xe</div>
+                        <div className="font-weight-bold fs-4">Tổng tiền: {total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</div>
                         {/*  */}
                       </div>
                       <div className="col-lg-5">
@@ -144,13 +217,10 @@ const Cart = () => {
                                 placeholder="Hình thức thanh toán"
                                 aria-label="Default select example"
                               >
-                                <option value="1">
+                                <option >
                                   Thanh toán khi nhận hàng
                                 </option>
-                                <option value="2">Thanh toán bằng thẻ</option>
-                                <option value="3">
-                                  Thanh toán bằng ví điện tử
-                                </option>
+
                               </select>
 
                               <div className="form-outline form-white mb-4">
@@ -159,7 +229,7 @@ const Cart = () => {
                                 </label>
                                 <input
                                   type="text"
-                                  id="typeName"
+                                  onChange={(event) => setName(event.target.value)}
                                   className="form-control form-control-lg"
                                   placeholder="Họ và tên"
                                 />
@@ -171,12 +241,12 @@ const Cart = () => {
                                 </label>
                                 <input
                                   type="text"
-                                  id="typeText"
+                                  onChange={(event) => setPhone(event.target.value)}
                                   className="form-control form-control-lg"
                                   size="17"
                                   placeholder="Nhập số điện thoại"
-                                  minlength="10"
-                                  maxlength="10"
+                                  minLength="10"
+                                  maxLength="10"
                                 />
                               </div>
 
@@ -186,7 +256,7 @@ const Cart = () => {
                                 </label>
                                 <input
                                   type="text"
-                                  id="typeAdress"
+                                  onChange={(event) => setAddress(event.target.value)}
                                   className="form-control form-control-lg"
                                   placeholder="Nhập địa chỉ"
                                 />
@@ -196,31 +266,29 @@ const Cart = () => {
                             <hr className="my-4" />
 
                             <div className="d-flex justify-content-between">
-                              <p className="mb-2">Tiền hàng:</p>
+                              <p className="mb-2">Số lượng:{quantityOrder}</p>
                               <p className="mb-2"></p>
                             </div>
 
-                            <div className="d-flex justify-content-between">
-                              <p className="mb-2">Phí vận chuyển:</p>
-                              <p className="mb-2"></p>
-                            </div>
+
 
                             <div className="d-flex justify-content-between mb-4">
-                              <p className="mb-2">Tổng:</p>
+                              <p className="mb-2">Tổng tiền:{total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} </p>
                               <p className="mb-2"></p>
                             </div>
 
                             <button
                               type="button"
                               className="btn btn-light btn-block btn-lg"
+                              onClick={handleBuyCart}
                             >
                               <div className="d-flex justify-content-between">
-                                <span>Thanh toán </span>
+                                <span>Đặt hàng </span>
                                 <span>
                                   <FontAwesomeIcon
                                     icon={faRightLong}
                                     className="ms-2"
-                                  />{" "}
+                                  />
                                 </span>
                               </div>
                             </button>

@@ -13,6 +13,8 @@ export const loginUser = async (user, dispatch, navigate) => {
         // localStorage.setItem("tokens",  JSON.stringify(res.data));
         // setUser(jwt_decode(res.data.access_token));
         localStorage.setItem('access_token', res.data.data.token);
+        localStorage.setItem('id', res.data.data.id);
+        localStorage.setItem('name', res.data.data.name);
 
         // Redirect đến trang dành cho user phù hợp (admin hoặc người dùng)
         if (res.data.data.role === 'admin') {

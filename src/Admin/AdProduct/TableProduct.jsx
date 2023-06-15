@@ -108,7 +108,7 @@ const TableProduct = (props) => {
                 <div className=''>
                     <div className=''>
                         <div className='my-3 add-new'>
-                            <h1>Quản lý sản phẩm</h1>
+                            <h1 className='text-center'>Quản lý sản phẩm</h1>
                             <button className='btn btn-danger d-flex justify-content-end'
                                 onClick={() => setIsShowModalAddNew(true)}
                             >Thêm sản phẩm</button>
@@ -135,7 +135,7 @@ const TableProduct = (props) => {
                                             <tr key={`product-${index}`}>
                                                 <td>{item.id}</td>
                                                 <td>{item.name}</td>
-                                                <td>{item.price}</td>
+                                                <td>{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                                                 <td>
                                                     <img
                                                         className="image"

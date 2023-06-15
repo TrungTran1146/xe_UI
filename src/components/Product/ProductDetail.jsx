@@ -21,8 +21,8 @@ const ProductDetail = (props) => {
   const [image, setImageCart] = useState();
   const [price, setPriceCart] = useState();
   const [totalCart, setTotalCart] = useState(0);
+  const [total, setTotal] = useState();
 
-  // const [potstCart, setPostCart] = useState();
 
   const { id } = useParams();
   useEffect(() => {
@@ -61,7 +61,7 @@ const ProductDetail = (props) => {
     let res = await postCreateCart(quantity, productId, name, image, price);
     if (res && res.data) {
       toast.success("Thêm xe vào giỏ hàng thành công!");
-
+      setTotal((total) => (total += Number(price)))
 
     } else {
       toast.error("Thêm xe vào giỏ hàng thất bại!");
@@ -85,7 +85,7 @@ const ProductDetail = (props) => {
             <div className="col-md-6">
               <h1 className="h1 display-5 font-weight-bold">{product.name}</h1>
               <div className="fs-5 mb-2">
-                <span>Giá tiền: {product.price} VNĐ</span>
+                <span>Giá tiền: {product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
               </div>
               <div className="fs-5 mb-2">
                 <span>Trạng thái: {product.status}</span>

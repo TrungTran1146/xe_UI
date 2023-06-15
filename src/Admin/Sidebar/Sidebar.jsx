@@ -20,7 +20,7 @@ const Sidebar = () => {
         <>
 
             <nav id="sidebar">
-                <div className="sidebar-header">
+                <div className="rounded-3 sidebar-header">
                     <Link to="/">
                         Admin
                     </Link>
@@ -28,38 +28,38 @@ const Sidebar = () => {
                 </div>
 
                 <ul className="list-unstyled components">
-                    <li>
-                        <Link to="#">
+                    <li >
+                        <Link className="rounded-3" to="#">
                             <AiFillDashboard />
                             Dashboard
                         </Link>
                     </li>
-                    <li>
-                        <Link to="/admin/product">
+                    <li >
+                        <Link className="rounded-3" to="/admin/product">
                             <AiOutlineAppstoreAdd />
                             Sản phẩm
                         </Link>
                     </li>
                     <li>
-                        <Link to="/admin/order">
+                        <Link className="rounded-3" to="/admin/order">
                             <AiOutlineShoppingCart />
                             Đơn hàng
                         </Link>
                     </li>
                     <li>
-                        <Link to="/admin/brand">
+                        <Link className="rounded-3" to="/admin/brand">
                             <AiOutlineTags />
                             Hãng xe
                         </Link>
                     </li>
                     <li>
-                        <Link to="/admin/typecar">
+                        <Link className="rounded-3" to="/admin/typecar">
                             <AiOutlineTags />
                             Loại xe
                         </Link>
                     </li>
                     <li>
-                        <Link to="/admin/nhapxe">
+                        <Link className="rounded-3" to="/admin/nhapxe">
                             <AiOutlineStock />
                             Nhập hàng
                         </Link>

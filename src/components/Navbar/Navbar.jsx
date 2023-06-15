@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 // import logo from '../../../assets/image/logo1.svg';
 import './Navbar.css';
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id');
+    localStorage.removeItem('name');
+    setIsLoggedIn(false);
+  };
   return (
     <div>
       {/* Navbar */}
       <nav className="header navbar navbar-expand-lg navbar-dark bg-success">
         <div className="container">
-          <Link className="navbar-brand" to="/">
 
+          <Link className="navbar-brand" to="/">
             <img
               className="navbar-logo"
               // src={logo}
@@ -36,13 +51,13 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="nav1 navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active " aria-current="page" to="/">
+                <Link className="fs-4 nav-link active " aria-current="page" to="/">
                   Giới thiệu
                 </Link>
               </li>
               <li className="nav-item dropdown">
                 <Link
-                  className="nav-link active "
+                  className="fs-4 nav-link active "
                   // dropdown-toggle
                   to="/shop"
                   id="navbarDropdown">
@@ -58,18 +73,32 @@ const Navbar = () => {
                 placeholder="Tìm kiếm"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-primary" href="#">
+              <button className="btn btn btn-danger" href="#">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </button>
+
+
+              {isLoggedIn ?
+                isLoggedIn && <button
+                  className="btn btn btn-danger mx-2"
+                  onClick={handleLogout}>
+                  <FontAwesomeIcon icon={faRightToBracket} />
+                </button>
+                :
+                <Link
+                  to="/login"
+                  className="btn btn btn-danger mx-2"
+                  type="submit"
+                >
+                  <FontAwesomeIcon icon={faUser} />
+
+                </Link>
+              }
+
+
+
               <Link
-                to="/login"
-                className="btn btn-outline-primary mx-2"
-                type="submit"
-              >
-                <FontAwesomeIcon icon={faRightToBracket} />
-              </Link>
-              <Link
-                className="btn btn-outline-primary position-relative mr-2"
+                className="btn btn btn-danger position-relative mr-2"
                 to="/cart"
                 type="submit"
               >

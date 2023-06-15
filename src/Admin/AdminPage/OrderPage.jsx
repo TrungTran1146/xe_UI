@@ -2,13 +2,21 @@ import React from "react";
 import Sidebar from "../Sidebar/Sidebar";
 
 
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 const OrderPage = () => {
     return (
-        <div>
-            <Sidebar />
-        </div>
+        <Container fluid>
+            <Row>
+                <Col md={2}>
+                    <Sidebar />
+                </Col>
+                <Col md={10}>
+                    {/* <TableTypeCar /> */}
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

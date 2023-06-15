@@ -9,7 +9,7 @@ import { faGem } from "@fortawesome/free-solid-svg-icons";
 import './Footer.css';
 const Footer = () => {
   return (
-    <footer className="text-center text-lg-start .bg-secondary text-dark">
+    <footer className="text-center text-lg-start bg-dark text-light">
       <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
 
 
