@@ -42,11 +42,6 @@ const Cart = () => {
 
 
   }, [checkID])
-
-
-
-
-
   const getTotal = async (data) => {
     let tol = 0;
     let quan = 0;
@@ -81,18 +76,21 @@ const Cart = () => {
 
 
   const postOrder = async () => {
-    let res = await apiPostOrder(checkID, checkName, name, phone, address, date.toLocaleString(), status, quantityOrder, total);
-
-
-    if (res && res.data) {
-      setAddress('');
-      setName('');
-      setPhone()
-      toast.success("Đặt hàng thành công!");
+    if (!name || !phone || !address) {
+      toast.warning("Vui lòng nhâp đầy đủ thông tin khách hàng!");
+    } else {
+      let res = await apiPostOrder(checkID, checkName, name, phone, address, date.toLocaleString(), status, quantityOrder, total);
+      if (res && res.data) {
+        setAddress('');
+        setName('');
+        setPhone()
+        toast.success("Đặt hàng thành công!");
+      }
+      else {
+        toast.error("Đặt hàng thất bại!");
+      }
     }
-    else {
-      toast.error("Đặt hàng thất bại!");
-    }
+
   }
 
   const handleClose = () => {
@@ -150,7 +148,7 @@ const Cart = () => {
                         <div className="d-flex justify-content-between align-items-center mb-4">
                           <div>
                             <p
-                              className="mb-1 btn btn-danger"
+
 
                             >Xem Thông tin giỏ hàng của bạn</p>
                             {/* <p className="mb-0">Bạn đang có 4 sản phẩm trong giỏ hàng</p> */}
@@ -188,6 +186,7 @@ const Cart = () => {
                                         <h5>{cart.name}</h5>
 
                                       </div>
+
                                     </div>
                                     <div className="d-flex  align-items-center">
                                       <div style={{ width: `150px` }}>

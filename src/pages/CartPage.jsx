@@ -30,8 +30,9 @@ const CartPage = () => {
 
 
     <>
-      <Navbar />
+
       <CartContext.Provider value={{ checkID, checkName }}>
+        <Navbar />
         <Cart />
       </CartContext.Provider>
       <Footer />

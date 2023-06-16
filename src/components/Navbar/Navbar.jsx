@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import logo from '../../../assets/image/logo1.svg';
 import './Navbar.css';
+import { CartContext } from "../../Contexts/CartContext";
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [namUser, setNameUser] = useState('');
+  const { checkID, checkName } = useContext(CartContext);
 
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) {
@@ -32,6 +34,13 @@ const Navbar = () => {
     setNameUser('');
     setIsLoggedIn(false);
   };
+
+  const handleClickAdmin = () => {
+    if (checkName === 'admin') {
+      navigate('/admin');
+    }
+
+  }
   return (
     <div>
       {/* Navbar */}
@@ -58,6 +67,7 @@ const Navbar = () => {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="nav1 navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
@@ -115,7 +125,7 @@ const Navbar = () => {
                 </span> */}
               </Link>
               <span
-
+                onClick={handleClickAdmin}
                 className="btn btn btn-danger mx-2"
               >{namUser}</span>
             </form>
