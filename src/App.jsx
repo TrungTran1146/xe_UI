@@ -16,6 +16,7 @@ import OrderPage from "./Admin/AdminPage/OrderPage";
 import ImportProductPage from "./Admin/AdminPage/ImportProductPage";
 import { ToastContainer } from 'react-toastify';
 import { useState, useEffect } from "react";
+import OrderUserPage from "./pages/OrderUserPage";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
 
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/order" element={<OrderUserPage />} />
           <Route path="/shop" element={<ProductListPage />} />
           <Route path="/Product/GetProductByID/:id" element={<ProductPage />} />
           {/* Admin */}

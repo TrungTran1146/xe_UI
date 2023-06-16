@@ -38,6 +38,8 @@ const Navbar = () => {
   const handleClickAdmin = () => {
     if (checkName === 'admin') {
       navigate('/admin');
+    } else {
+      navigate('/order')
     }
 
   }

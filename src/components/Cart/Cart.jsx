@@ -33,15 +33,14 @@ const Cart = () => {
   const { checkID, checkName } = useContext(CartContext);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     // allCart();
-
     if (checkID) {
       allCartID();
     }
-
-
   }, [checkID])
+
   const getTotal = async (data) => {
     let tol = 0;
     let quan = 0;

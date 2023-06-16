@@ -1,18 +1,17 @@
 import Table from 'react-bootstrap/Table';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { getAllOrder } from '../../services/brandApi';
 import { Button } from 'bootstrap';
 // import './Order.css';
 
-import OrderDelete from './OrderDelete';
-// import OrderEdit from './OrderEdit';
-// import OrderAddNew from './OrderAddNew';
+
 import _ from "lodash";
-import { apiGetAllOrder } from '../../services/orderApi';
+import { apiGetAllOrder, apiGetOrderID, getOrderID } from '../../services/orderApi';
+import { CartContext } from '../../Contexts/CartContext';
 
 
-const TableOrder = (props) => {
+const UserOrder = (props) => {
 
     const [listOrder, setListOrder] = useState([]);
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
@@ -25,7 +24,21 @@ const TableOrder = (props) => {
     const [isShowDelete, setIsShowDelete] = useState(false);
     const [dataOrderDelete, setDataOrderDelete] = useState({})
 
+    const { checkID } = useContext(CartContext);
+    useEffect(() => {
+        if (checkID) {
+            getOrderIDs();
+        }
 
+    }, [checkID]);
+
+    const getOrderIDs = async () => {
+        let res = await apiGetOrderID(checkID);
+        console.log(res)
+        if (res && res.data) {
+            setListOrder(res.data)
+        }
+    }
 
     const handleClose = () => {
         setIsShowModalAddNew(false);
@@ -48,17 +61,8 @@ const TableOrder = (props) => {
     }
 
     //call api getallOrder
-    useEffect(() => {
 
-        getOrder();
-    }, [])
 
-    const getOrder = async () => {
-        let res = await apiGetAllOrder();
-        if (res && res.data) {
-            setListOrder(res.data)
-        }
-    }
 
     //Sửa sản phẩm
     const handleEditOrder = (brand) => {
@@ -80,19 +84,20 @@ const TableOrder = (props) => {
     return (
         <>
 
-            <div className="row">
+            <div className="container row">
                 <div className=''>
                     <div className=''>
                         <div className='my-3 add-new'>
-                            <h1 className='text-center'>Quản lý đơn hàng</h1>
+                            <h1 className='text-center'>Đơn hàng của bạn</h1>
 
                         </div>
                         < Table striped bordered hover >
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+
                                     {/* <th>ID Nguoi dung</th> */}
-                                    <th>Tên Uer</th>
+
+                                    <th>Mã đơn hàng</th>
                                     <th>Tên người đặt</th>
                                     <th>SĐT</th>
                                     <th>Địa chỉ</th>
@@ -100,7 +105,6 @@ const TableOrder = (props) => {
                                     <th>Trạng thái</th>
                                     <th>Số lượng xe</th>
                                     <th>Tổng tiền</th>
-                                    <th>Hành động</th>
 
                                 </tr>
                             </thead>
@@ -110,9 +114,9 @@ const TableOrder = (props) => {
                                         return (
                                             <tr key={`brand-${index}`}>
 
+
+
                                                 <td>{item.id}</td>
-                                                {/* <td>{item.userId}</td> */}
-                                                <td>{item.nameUser}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.phone}</td>
                                                 <td>{item.address}</td>
@@ -120,7 +124,7 @@ const TableOrder = (props) => {
                                                 <td>{item.status}</td>
                                                 <td>{item.quantity}</td>
                                                 <td>{item.totalOrder.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
-                                                <td>
+                                                {/* <td>
                                                     <button className='btn-edit'
                                                         onClick={() => handleEditOrder(item)}
                                                     ><i className="bi bi-pencil "></i>
@@ -130,7 +134,7 @@ const TableOrder = (props) => {
                                                         onClick={() => handleDeleteOrder(item)}
                                                     ><i className="bi bi-trash-fill "></i>
                                                     </button>
-                                                </td>
+                                                </td> */}
                                             </tr>
                                         )
                                     })
@@ -142,30 +146,9 @@ const TableOrder = (props) => {
             </div >
 
 
-            {/* Them */}
-            {/* <OrderAddNew
-                show={isShowModalAddNew}
-                handleClose={handleClose}
-                handleUpdateTable={handleUpdateTable}
-            /> */}
 
-            {/* Sua */}
-            {/* <OrderEdit
-                show={isShowModalEdit}
-                handleClose={handleClose}
-                dataOrderEdit={dataOrderEdit}
-                handleEditOrderFromModal={handleEditOrderFromModal}
-            /> */}
-
-            {/* Xoa */}
-            <OrderDelete
-                show={isShowDelete}
-                handleClose={handleClose}
-                dataOrderDelete={dataOrderDelete}
-                handleDeleteOrderFromModal={handleDeleteOrderFromModal}
-            />
         </>
 
     )
 }
-export default TableOrder;
+export default UserOrder;

@@ -30,6 +30,11 @@ import axios from "./axios";
 const apiGetAllOrder = () => {
     return axios.get("/Order/GetOrderAll");
 }
+
+const apiGetOrderID = (id) => {
+    return axios.get(`/Order/GetOrderByID/${id}`);
+}
+
 const apiPostOrder = (userId, nameUser, name, phone, address, date, status, quantity, totalOrder) => {
     const formData = new FormData();
     formData.append('userId', userId);
@@ -66,4 +71,4 @@ const apiDeleteOrder = (id) => {
     return axios.delete(`/Order/DeleteOrder/${id}`);
 }
 
-export { apiGetAllOrder, apiPostOrder, apiPutOrder, apiDeleteOrder }
+export { apiGetAllOrder, apiGetOrderID, apiPostOrder, apiPutOrder, apiDeleteOrder }
