@@ -3,6 +3,7 @@ import Sidebar from "../Sidebar/Sidebar";
 
 
 import { Container, Row, Col } from 'react-bootstrap';
+import TableOrder from "../AdOrder/TableOrder";
 
 
 const OrderPage = () => {
@@ -13,7 +14,7 @@ const OrderPage = () => {
                     <Sidebar />
                 </Col>
                 <Col md={10}>
-                    {/* <TableTypeCar /> */}
+                    <TableOrder />
                 </Col>
             </Row>
         </Container>

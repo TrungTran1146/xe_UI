@@ -21,7 +21,7 @@ const ProductAddNew = (props) => {
     };
     const handleSaveProduct = async () => {
         let res = await postCreateProduct(name, price, status, quantity, description, image, brandId, typeCarId);
-        console.log(res.data)
+
         if (res && res.data.id) {
             handleClose();
             setName('');

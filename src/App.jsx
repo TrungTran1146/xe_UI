@@ -15,33 +15,39 @@ import TypeCarPage from "./Admin/AdminPage/TypeCarPage";
 import OrderPage from "./Admin/AdminPage/OrderPage";
 import ImportProductPage from "./Admin/AdminPage/ImportProductPage";
 import { ToastContainer } from 'react-toastify';
+import { useState, useEffect } from "react";
 
 function App() {
 
 
   return (
     <>
-      <CartContext.Provider value={{}}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
 
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/shop" element={<ProductListPage />} />
-            <Route path="/Product/GetProductByID/:id" element={<ProductPage />} />
-            {/* Admin */}
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/admin/product" element={<ADProductPage />} />
-            <Route path="/admin/order" element={<OrderPage />} />
-            <Route path="/admin/brand" element={<BrandPage />} />
-            <Route path="/admin/typecar" element={<TypeCarPage />} />
-            <Route path="/admin/nhapxe" element={<ImportProductPage />} />
-          </Routes>
-        </Router>
 
-      </CartContext.Provider>
+      <Router>
+        <Routes>
+
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/shop" element={<ProductListPage />} />
+          <Route path="/Product/GetProductByID/:id" element={<ProductPage />} />
+          {/* Admin */}
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/product" element={<ADProductPage />} />
+          <Route path="/admin/order" element={<OrderPage />} />
+          <Route path="/admin/brand" element={<BrandPage />} />
+          <Route path="/admin/typecar" element={<TypeCarPage />} />
+          <Route path="/admin/nhapxe" element={<ImportProductPage />} />
+
+
+
+        </Routes>
+      </Router>
+
+
 
       <ToastContainer
         position="top-right"

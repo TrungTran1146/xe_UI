@@ -40,7 +40,7 @@ const ProductEdit = (props) => {
     const handleEditProduct = async () => {
 
         const res = await putUpdateProduct(dataProductEdit.id, name, price, status, quantity, description, image, brandId, typeCarId);
-        console.log('check', res.data)
+
         if (res && res.data.id) {
             handleClose();
             handleEditProductFromModal({
@@ -64,7 +64,7 @@ const ProductEdit = (props) => {
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Thêm sản phẩm</Modal.Title>
+                    <Modal.Title>Sửa sản phẩm</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="body-add-new">

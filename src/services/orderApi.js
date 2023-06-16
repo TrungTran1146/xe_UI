@@ -30,9 +30,10 @@ import axios from "./axios";
 const apiGetAllOrder = () => {
     return axios.get("/Order/GetOrderAll");
 }
-const apiPostOrder = (userId, name, phone, address, date, status, quantity, totalOrder) => {
+const apiPostOrder = (userId, nameUser, name, phone, address, date, status, quantity, totalOrder) => {
     const formData = new FormData();
     formData.append('userId', userId);
+    formData.append('nameUser', nameUser);
     formData.append('name', name);
     formData.append('phone', phone);
     formData.append('address', address);

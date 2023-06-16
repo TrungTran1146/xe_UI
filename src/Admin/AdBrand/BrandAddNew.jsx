@@ -38,7 +38,7 @@ const BrandAddNew = (props) => {
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Thêm sản phẩm</Modal.Title>
+                    <Modal.Title>Thêm hãng xe</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="body-add-new">

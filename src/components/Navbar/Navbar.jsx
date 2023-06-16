@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import './Navbar.css';
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [namUser, setNameUser] = useState('');
 
 
   useEffect(() => {
@@ -15,11 +16,20 @@ const Navbar = () => {
     if (token) {
       setIsLoggedIn(true);
     }
+    checkNameUsers();
   }, []);
+
+
+  const checkNameUsers = () => {
+    var nameUser = localStorage.getItem('name');
+    setNameUser(nameUser);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id');
     localStorage.removeItem('name');
+    setNameUser('');
     setIsLoggedIn(false);
   };
   return (
@@ -94,19 +104,20 @@ const Navbar = () => {
 
                 </Link>
               }
-
-
-
               <Link
                 className="btn btn btn-danger position-relative mr-2"
                 to="/cart"
                 type="submit"
               >
                 <FontAwesomeIcon icon={faCartShopping} />
-                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                {/* <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
                   0
-                </span>
+                </span> */}
               </Link>
+              <span
+
+                className="btn btn btn-danger mx-2"
+              >{namUser}</span>
             </form>
           </div>
         </div>

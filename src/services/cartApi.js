@@ -33,8 +33,9 @@ const getAllCart = () => {
 const getCartID = (id) => {
     return axios.get(`/Cart/GetCartByID/${id}`);
 }
-const postCreateCart = (quantity, productId, name, image, price) => {
+const postCreateCart = (userId, quantity, productId, name, image, price) => {
     const formData = new FormData();
+    formData.append('userId', userId);
     formData.append('quantity', quantity);
     formData.append('productId', productId);
     formData.append('name', name);

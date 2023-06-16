@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import "./Cart.css";
-import { deleteCart, getAllCart } from "../../services/cartApi";
+import { deleteCart, getAllCart, getCartID } from "../../services/cartApi";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import CartDelete from "./CartDelete";
 import { apiPostOrder } from "../../services/orderApi";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../Contexts/CartContext";
 // const history = useHistory();
 
 
@@ -27,20 +28,23 @@ const Cart = () => {
   const [address, setAddress] = useState();
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
-  const [checkID, setCheckIdUser] = useState();
+
+
+  const { checkID, checkName } = useContext(CartContext);
 
   const navigate = useNavigate();
   useEffect(() => {
-    allCart();
+    // allCart();
 
-    checkIdUsers();
-  }, [])
+    if (checkID) {
+      allCartID();
+    }
 
 
-  const checkIdUsers = () => {
-    var idUser = localStorage.getItem('id');
-    setCheckIdUser(idUser);
-  }
+  }, [checkID])
+
+
+
 
 
   const getTotal = async (data) => {
@@ -54,23 +58,36 @@ const Cart = () => {
     setTotal(tol);
   }
   //GỌi API
-  const allCart = async () => {
-    let res = await getAllCart();
+  // const allCart = async () => {
+  //   let res = await getAllCart();
+  //   if (res && res.data) {
+  //     setListCart(res.data);
+  //     getTotal(res.data)
+  //   }
+  // }
+  const allCartID = async () => {
+
+    let res = await getCartID(checkID);
     if (res && res.data) {
       setListCart(res.data);
       getTotal(res.data)
     }
+
+
   }
 
-  // console.log('thoi gian', date.toLocaleString());
 
 
-  console.log('dsd', checkID, name, phone, address, date.toLocaleString(), status, quantityOrder, total)
+
+
   const postOrder = async () => {
-    let res = await apiPostOrder(checkID, name, phone, address, date.toLocaleString(), status, quantityOrder, total);
-    console.log(res.data);
+    let res = await apiPostOrder(checkID, checkName, name, phone, address, date.toLocaleString(), status, quantityOrder, total);
+
 
     if (res && res.data) {
+      setAddress('');
+      setName('');
+      setPhone()
       toast.success("Đặt hàng thành công!");
     }
     else {
@@ -89,7 +106,8 @@ const Cart = () => {
 
   }
   const handleDeleteCartFromModal = (cart) => {
-    allCart();
+    // allCart();
+    allCartID();
   }
 
 
@@ -102,15 +120,9 @@ const Cart = () => {
       setTimeout(() => {
         navigate("/login");
       }, 3000);
+    } else {
+      postOrder();
     }
-
-    console.log('dsd', checkID, name, phone, address, date.toLocaleString(), status, quantityOrder, total)
-
-    // setTimeout(() => {
-    postOrder();
-
-    // }, 1000);
-
   }
   return (
     <>
@@ -137,7 +149,10 @@ const Cart = () => {
 
                         <div className="d-flex justify-content-between align-items-center mb-4">
                           <div>
-                            <p className="mb-1">Thông tin giỏ hàng của bạn</p>
+                            <p
+                              className="mb-1 btn btn-danger"
+
+                            >Xem Thông tin giỏ hàng của bạn</p>
                             {/* <p className="mb-0">Bạn đang có 4 sản phẩm trong giỏ hàng</p> */}
                           </div>
                           <div>

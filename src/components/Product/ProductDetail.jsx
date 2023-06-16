@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import { getAllCart, postCreateCart, deteteCart } from "../../services/cartApi";
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,11 +22,13 @@ const ProductDetail = (props) => {
   const [price, setPriceCart] = useState();
   const [totalCart, setTotalCart] = useState(0);
   const [total, setTotal] = useState();
-
-
+  const [checkID, setCheckIdUser] = useState();
+  const [checkName, setCheckNameUser] = useState();
+  const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
     loadProduct();
+    checkIdNameUsers();
     // createCart();
   }, []);
 
@@ -40,12 +42,11 @@ const ProductDetail = (props) => {
 
   }
 
-  const createCart = async () => {
-
-
-    // console.log('tt', res)
-
-
+  const checkIdNameUsers = () => {
+    var idUser = localStorage.getItem('id');
+    var nameUser = localStorage.getItem('name');
+    setCheckIdUser(idUser);
+    setCheckNameUser(nameUser);
   }
 
 
@@ -55,20 +56,28 @@ const ProductDetail = (props) => {
 
 
   const handleAddCart = async () => {
-    setAdded(true);
+    const token = localStorage.getItem('access_token');
 
-    // setQuantityCart(quantity + 1);
-    let res = await postCreateCart(quantity, productId, name, image, price);
-    if (res && res.data) {
-      toast.success("Thêm xe vào giỏ hàng thành công!");
-      setTotal((total) => (total += Number(price)))
-
+    if (!token) {
+      toast.warning("Bạn chưa đăng nhập vào trang web!")
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     } else {
-      toast.error("Thêm xe vào giỏ hàng thất bại!");
-    }
-    // setTotalCart(totalCart + 1);
+      setAdded(true);
 
-    // createCart();
+      // setQuantityCart(quantity + 1);
+      let res = await postCreateCart(checkID, quantity, productId, name, image, price);
+      if (res && res.data) {
+        toast.success("Thêm xe vào giỏ hàng thành công!");
+        setTotal((total) => (total += Number(price)))
+
+      } else {
+        toast.error("Thêm xe vào giỏ hàng thất bại!");
+      }
+    }
+
+
   }
 
   return (
