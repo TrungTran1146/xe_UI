@@ -31,6 +31,10 @@ const apiGetAllOrder = () => {
     return axios.get("/Order/GetOrderAll");
 }
 
+const getOrderPage = (page) => {
+    return axios.get(`/Order/orders/paged?page=${page}&pageSize=${8}`);
+}
+
 const apiGetOrderID = (id) => {
     return axios.get(`/Order/GetOrderByID/${id}`);
 }
@@ -54,9 +58,10 @@ const apiPostOrder = (userId, nameUser, name, phone, address, date, status, quan
 }
 
 
-const apiPutOrder = (id, userId, name, phone, address, date, status, quantity, totalOrder) => {
+const apiPutOrder = (id, userId, nameUser, name, phone, address, date, status, quantity, totalOrder) => {
     const formData = new FormData();
     formData.append('userId', userId);
+    formData.append('nameUser', nameUser);
     formData.append('name', name);
     formData.append('phone', phone);
     formData.append('address', address);
@@ -64,11 +69,15 @@ const apiPutOrder = (id, userId, name, phone, address, date, status, quantity, t
     formData.append('status', status);
     formData.append('quantity', quantity);
     formData.append('totalOrder', totalOrder);
-    return axios.put(`/Order/UpdateOrder/${id}`, formData);
+    var data = {};
+    formData.forEach(function (value, key) {
+        data[key] = value;
+    });
+    return axios.put(`/Order/UpdateOrder/${id}`, data);
 
 }
 const apiDeleteOrder = (id) => {
     return axios.delete(`/Order/DeleteOrder/${id}`);
 }
 
-export { apiGetAllOrder, apiGetOrderID, apiPostOrder, apiPutOrder, apiDeleteOrder }
+export { apiGetAllOrder, apiGetOrderID, apiPostOrder, apiPutOrder, apiDeleteOrder, getOrderPage }

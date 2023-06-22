@@ -34,7 +34,7 @@ const UserOrder = (props) => {
 
     const getOrderIDs = async () => {
         let res = await apiGetOrderID(checkID);
-        console.log(res)
+
         if (res && res.data) {
             setListOrder(res.data)
         }

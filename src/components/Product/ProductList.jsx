@@ -5,10 +5,10 @@ import React, { useEffect, useState } from "react";
 // // import productApi from "../../services/productApi";
 
 import './Product.css';
-import { getAllProduct, getTypeProduct } from "../../services/productApi";
+import { getAllProduct, getProductPage, getTypeProduct } from "../../services/productApi";
 import { Link } from "react-router-dom";
 import { getAllTypeCar } from "../../services/typeCarApi";
-
+import ReactPaginate from 'react-paginate';
 
 const ProductList = () => {
 
@@ -16,11 +16,13 @@ const ProductList = () => {
   const [selectTypeProduct, setSelectTypeProduct] = useState('all');
   const [selectTypeCarProduct, setSelectTypeCarProduct] = useState([]);
 
+  const [totalProduct, setTotalProduct] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
 
   useEffect(() => {
-
-    allProduct();
+    getProductPages(1);
+    // allProduct();
     getTypeCar();
     typeProduct();
   }, [])
@@ -36,10 +38,27 @@ const ProductList = () => {
   }
 
 
-  const allProduct = async () => {
-    let res = await getAllProduct();
-    if (res && res.data)
-      setSelectTypeCarProduct(res.data);
+  // const allProduct = async () => {
+  //   let res = await getAllProduct();
+  //   if (res && res.data)
+  //     setSelectTypeCarProduct(res.data);
+  // }
+
+  //phan trang
+  const getProductPages = async (page) => {
+    let res = await getProductPage(page);
+
+    if (res && res.data) {
+
+      setTotalProduct(res.data.totalItems);
+      setTotalPages(res.data.totalPages)
+      setSelectTypeCarProduct(res.data.items);
+    }
+  }
+
+  const handlePageClick = (event) => {
+
+    getProductPages(+event.selected + 1);
   }
 
   const handleTypeProduct = async (event) => {
@@ -50,9 +69,11 @@ const ProductList = () => {
         setSelectTypeCarProduct(res.data);
       }
     } else {
-      allProduct();
+      getProductPages(1);
     }
   }
+
+
 
   return (
     <>
@@ -119,6 +140,25 @@ const ProductList = () => {
               </div>);
           })}
         </div >
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={totalPages}
+          previousLabel="< previous"
+
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+        />
       </div >
     </>
   );

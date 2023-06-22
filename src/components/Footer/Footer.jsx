@@ -17,7 +17,7 @@ const Footer = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.facebook.com/TrungTran1146"
+            href="https://www.facebook.com/ngoctrinhfashion89"
             className="me-4 text-reset"
           >
 
@@ -26,7 +26,7 @@ const Footer = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.facebook.com/TrungTran1146"
+            href="https://www.instagram.com/ngoctrinh89/?fbclid=IwAR1ZVvJvLC4gJuXZ9VrUjvgRtAr1SSVw46colbIEbi9-6iYpBYxzVCxbh-s"
             className="me-4 text-reset"
           >
             <img className="footer-social__image webpexpress-processed" src="https://yamaha-motor.com.vn/wp/wp-content/themes/yamaha/assets/img/share/ico-instagram.png" alt=" instagram" width="50" height="50"></img>
@@ -35,7 +35,7 @@ const Footer = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.facebook.com/TrungTran1146"
+            href="https://www.youtube.com/@ngoctrinhofficial9626"
             className="me-4 text-reset"
           >
             <img src="https://yamaha-motor.com.vn/wp/wp-content/themes/yamaha/assets/img/share/ico-youtube.png" alt=" youtube" width="62" height="50"></img>
@@ -44,7 +44,7 @@ const Footer = () => {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://www.facebook.com/TrungTran1146"
+            href="https://www.tiktok.com/@ngoctrinh89"
             className="me-4 text-reset"
           >
             <img src="https://yamaha-motor.com.vn/wp/wp-content/themes/yamaha/assets/img/share/ico-tiktok.png" alt=" tiktok" width="50" height="50"></img>

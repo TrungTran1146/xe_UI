@@ -44,7 +44,7 @@ export const loginUser = async (user, dispatch, navigate) => {
 
 export const registerUser = async (user, dispatch, navigate) => {
     dispatch(registerStart());
-    console.log(user)
+
     try {
         if (!user.address && !user.email && !user.fullName && !user.password && !user.userName) {
             toast.warning('Vui lòng nhập thông tin để đăng nhập!');

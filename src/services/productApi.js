@@ -6,6 +6,9 @@ import axios from "./axios";
 const getAllProduct = () => {
     return axios.get("/Product/GetProductAll");
 }
+const getProductPage = (page) => {
+    return axios.get(`/Product/products/paged?page=${page}&pageSize=${8}`);
+}
 
 const getProductID = (id) => {
     return axios.get(`/Product/GetProductByID/${id}`);
@@ -49,5 +52,6 @@ export {
     postCreateProduct,
     putUpdateProduct,
     deleteProduct,
-    getTypeProduct
+    getTypeProduct,
+    getProductPage
 }

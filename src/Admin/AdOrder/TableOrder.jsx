@@ -9,8 +9,10 @@ import OrderDelete from './OrderDelete';
 // import OrderEdit from './OrderEdit';
 // import OrderAddNew from './OrderAddNew';
 import _ from "lodash";
-import { apiGetAllOrder } from '../../services/orderApi';
-
+import { apiGetAllOrder, apiPutOrder, getOrderPage } from '../../services/orderApi';
+import { event } from 'jquery';
+import { toast } from 'react-toastify';
+import ReactPaginate from 'react-paginate';
 
 const TableOrder = (props) => {
 
@@ -26,6 +28,10 @@ const TableOrder = (props) => {
     const [dataOrderDelete, setDataOrderDelete] = useState({})
 
 
+    const [changeStatus, setChangeStatus] = useState('')
+
+    const [totalOrder, setTotalOrder] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
     const handleClose = () => {
         setIsShowModalAddNew(false);
@@ -49,23 +55,45 @@ const TableOrder = (props) => {
 
     //call api getallOrder
     useEffect(() => {
+        getOrderPages(1);
+        // getOrder();
+    }, []);
 
-        getOrder();
-    }, [])
+    // const getOrder = async () => {
+    //     let res = await apiGetAllOrder();
+    //     if (res && res.data) {
+    //         setListOrder(res.data)
+    //     }
+    // };
 
-    const getOrder = async () => {
-        let res = await apiGetAllOrder();
+    const handleOnClickStatus = (event, index) => {
+        const value = event.target.value;
+        console.log(value);
+        const newOptions = [...listOrder];
+        newOptions[index].status = value;
+        setListOrder(newOptions);
+    }
+
+
+
+    //Sửa đơn hàng
+    const handleSaveOrder = async (brand) => {
+        console.log('check', brand)
+        let res = await apiPutOrder(brand.id, brand.userId, brand.nameUser, brand.name, brand.phone, brand.address,
+            brand.date, brand.status, brand.quantity, brand.totalOrder);
         if (res && res.data) {
-            setListOrder(res.data)
+            toast.success("Update trạng thái thành công!")
+        } else {
+            toast.error("Update trạng thái thất bại!")
         }
+        // console.log('check', res.data)
+        // setDataOrderEdit(brand);
+        // setIsShowModalEdit(true);
     }
 
-    //Sửa sản phẩm
-    const handleEditOrder = (brand) => {
-        setDataOrderEdit(brand);
-        setIsShowModalEdit(true);
-    }
+    const handleDetailOrder = () => {
 
+    }
     //Xóa Sản phẩm
     const handleDeleteOrder = (brand) => {
         setIsShowDelete(true);
@@ -76,6 +104,23 @@ const TableOrder = (props) => {
         let cloneListOrder = _.cloneDeep(listOrder);
         cloneListOrder = cloneListOrder.filter(item => item.id !== brand.id);
         setListOrder(cloneListOrder);
+    }
+
+    //phan trang
+    const getOrderPages = async (page) => {
+        let res = await getOrderPage(page);
+        console.log(res.data.items);
+        if (res && res.data) {
+            // console.log(res);
+            setTotalOrder(res.data.totalItems);
+            setTotalPages(res.data.totalPages)
+            setListOrder(res.data.items);
+        }
+    }
+
+    const handlePageClick = (event) => {
+        console.log(event);
+        getOrderPages(+event.selected + 1);
     }
     return (
         <>
@@ -90,12 +135,12 @@ const TableOrder = (props) => {
                         < Table striped bordered hover >
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Mã đơn hàng</th>
                                     {/* <th>ID Nguoi dung</th> */}
                                     <th>Tên Uer</th>
                                     <th>Tên người đặt</th>
                                     <th>SĐT</th>
-                                    <th>Địa chỉ</th>
+                                    <th>Địa chỉ cửa hàng</th>
                                     <th>Thời gian</th>
                                     <th>Trạng thái</th>
                                     <th>Số lượng xe</th>
@@ -108,7 +153,7 @@ const TableOrder = (props) => {
                                 {listOrder && listOrder.length > 0 &&
                                     listOrder.map((item, index) => {
                                         return (
-                                            <tr key={`brand-${index}`}>
+                                            <tr key={item.id}>
 
                                                 <td>{item.id}</td>
                                                 {/* <td>{item.userId}</td> */}
@@ -117,13 +162,38 @@ const TableOrder = (props) => {
                                                 <td>{item.phone}</td>
                                                 <td>{item.address}</td>
                                                 <td>{item.date}</td>
-                                                <td>{item.status}</td>
+                                                <td className=''>
+                                                    {/* <button
+                                                        className='btn btn-danger'
+                                                        onClick={(event) => handleOnClickStatus(event, index)}>
+                                                       
+                                                    </button> */}
+                                                    <select name="" id=""
+                                                        value={item.status}
+                                                        onChange={(event) => handleOnClickStatus(event, index)}
+
+                                                    >
+                                                        <option value=""> {item.status}</option>
+                                                        <option value="Đang chờ xác nhận"> Đang chờ xác nhận</option>
+                                                        <option value="Đang chờ khách hàng đến cửa hàng nhận hàng"> Đang chờ khách hàng đến cửa hàng nhận hàng</option>
+                                                        <option value="Đã nhận hàng và thanh toán">Đã nhận hàng và thanh toán</option>
+                                                    </select>
+
+
+                                                </td>
+
                                                 <td>{item.quantity}</td>
                                                 <td>{item.totalOrder.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                                                 <td>
+                                                    <button className='btn btn-danger'
+                                                        onClick={() => handleDetailOrder(item)}>
+                                                        {/* <i className="bi bi-pencil "></i> */}
+                                                        Chi tiết ĐH
+                                                    </button>
                                                     <button className='btn-edit'
-                                                        onClick={() => handleEditOrder(item)}
-                                                    ><i className="bi bi-pencil "></i>
+                                                        onClick={() => handleSaveOrder(item)}>
+                                                        <i className="bi bi-save "></i>
+
                                                     </button>
 
                                                     <button className='btn-delete '
@@ -137,6 +207,25 @@ const TableOrder = (props) => {
                                 }
                             </tbody>
                         </ Table >
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={totalPages}
+                            previousLabel="< previous"
+
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                        />
                     </div >
                 </div >
             </div >

@@ -23,10 +23,10 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
   const [quantityOrder, setQuantityOrder] = useState(0);
 
-  const [status, setStatus] = useState('Chưa thanh toán')
+  const [status, setStatus] = useState('Đã đặt hàng')
   const [date, setDate] = useState(new Date());
-  const [address, setAddress] = useState();
-  const [name, setName] = useState();
+  const [address, setAddress] = useState('');
+  const [name, setName] = useState('');
   const [phone, setPhone] = useState();
 
 
@@ -79,10 +79,14 @@ const Cart = () => {
       toast.warning("Vui lòng nhâp đầy đủ thông tin khách hàng!");
     } else {
       let res = await apiPostOrder(checkID, checkName, name, phone, address, date.toLocaleString(), status, quantityOrder, total);
+
       if (res && res.data) {
         setAddress('');
         setName('');
-        setPhone()
+        setPhone();
+        setListCart([]);
+        setQuantityOrder(0);
+        setTotal(0);
         toast.success("Đặt hàng thành công!");
       }
       else {
@@ -265,14 +269,25 @@ const Cart = () => {
 
                               <div className="form-outline form-white mb-4">
                                 <label className="form-label" htmlFor="typeAdress">
-                                  Địa chỉ người nhận:
+                                  Nhận hàng tại cửa hàng xe máy Trung Trần gần nhất:
                                 </label>
-                                <input
+                                {/* <input
                                   type="text"
                                   onChange={(event) => setAddress(event.target.value)}
                                   className="form-control form-control-lg"
                                   placeholder="Nhập địa chỉ"
-                                />
+                                /> */}
+                                <select
+                                  className="form-select form-outline mb-4"
+                                  onChange={(event) => setAddress(event.target.value)}
+                                  placeholder="Hình thức thanh toán"
+                                  aria-label="Default select example"
+                                >
+                                  <option value=''>Chọn địa chỉ</option>
+                                  <option value='42 Phạm Ngọc Thạch, Phường 6, Quận 3, Thành phố Hồ Chí Minh'>42 Phạm Ngọc Thạch, Phường 6, Quận 3, Thành phố Hồ Chí Minh</option>
+                                  <option value='Đ.Bùi Viện Phạm Ngũ Lão, Quận 1, Thành phố Hồ Chí Minh'>Đ.Bùi Viện Phạm Ngũ Lão, Quận 1, Thành phố Hồ Chí Minh</option>
+
+                                </select>
                               </div>
                             </form>
 

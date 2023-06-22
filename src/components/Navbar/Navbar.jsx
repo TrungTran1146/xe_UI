@@ -122,9 +122,9 @@ const Navbar = () => {
                 type="submit"
               >
                 <FontAwesomeIcon icon={faCartShopping} />
-                {/* <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                <span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
                   0
-                </span> */}
+                </span>
               </Link>
               <span
                 onClick={handleClickAdmin}

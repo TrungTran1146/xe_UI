@@ -57,7 +57,6 @@ const ProductDetail = (props) => {
 
   const handleAddCart = async () => {
     const token = localStorage.getItem('access_token');
-
     if (!token) {
       toast.warning("Bạn chưa đăng nhập vào trang web!")
       setTimeout(() => {
@@ -76,8 +75,6 @@ const ProductDetail = (props) => {
         toast.error("Thêm xe vào giỏ hàng thất bại!");
       }
     }
-
-
   }
 
   return (
@@ -100,20 +97,18 @@ const ProductDetail = (props) => {
                 <span>Trạng thái: {product.status}</span>
               </div>
               <div className="fs-5 mb-2">
-                <span>Số lượng còn lại: {product.quantity} xe</span>
+
+                <span>Số lượng còn lại: {product.quantity - 1} xe</span>
               </div>
               <p className="lead">
                 Mô tả: {product.description}
               </p>
               <div className="d-flex">
-
-
                 {/* // */}
                 {isAdded ?
                   (<button
                     className="btn btn-outline-primary flex-shrink-0 ms-3"
                     type="button"
-
                   >
                     <FontAwesomeIcon icon={faCartShopping} className="me-2"
                     />

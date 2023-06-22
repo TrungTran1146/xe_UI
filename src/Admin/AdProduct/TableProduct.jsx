@@ -1,7 +1,7 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
 
-import { getAllProduct } from '../../services/productApi';
+import { getAllProduct, getProductPage } from '../../services/productApi';
 import { Button } from 'bootstrap';
 import './Product.css';
 
@@ -11,7 +11,7 @@ import ProductAddNew from './ProductAddNew';
 import _ from "lodash";
 import { getAllBrand } from '../../services/brandApi';
 import { getAllTypeCar } from '../../services/typeCarApi';
-
+import ReactPaginate from 'react-paginate';
 
 const TableProduct = (props) => {
 
@@ -29,7 +29,9 @@ const TableProduct = (props) => {
     const [isShowDelete, setIsShowDelete] = useState(false);
     const [dataProductDelete, setDataProductDelete] = useState({})
 
-
+    //phan trang
+    const [totalProduct, setTotalProduct] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
     const handleClose = () => {
         setIsShowModalAddNew(false);
@@ -57,18 +59,18 @@ const TableProduct = (props) => {
     //call api getallProduct
     useEffect(() => {
 
-        getProduct();
+        // getProduct();
+        getProductPages(1);
         getBrand();
         getTypeCar();
     }, [])
 
-    const getProduct = async () => {
-        let res = await getAllProduct();
-        if (res && res.data) {
-            setListProduct(res.data);
-        }
-
-    }
+    // const getProduct = async () => {
+    //     let res = await getAllProduct();
+    //     if (res && res.data) {
+    //         setListProduct(res.data);
+    //     }
+    // }
 
 
     const getBrand = async () => {
@@ -100,6 +102,22 @@ const TableProduct = (props) => {
         let cloneListProduct = _.cloneDeep(listProduct);
         cloneListProduct = cloneListProduct.filter(item => item.id !== product.id);
         setListProduct(cloneListProduct);
+    }
+    //phan trang
+    const getProductPages = async (page) => {
+        let res = await getProductPage(page);
+
+        if (res && res.data) {
+
+            setTotalProduct(res.data.totalItems);
+            setTotalPages(res.data.totalPages)
+            setListProduct(res.data.items);
+        }
+    }
+
+    const handlePageClick = (event) => {
+
+        getProductPages(+event.selected + 1);
     }
     return (
         <>
@@ -164,6 +182,25 @@ const TableProduct = (props) => {
                                 }
                             </tbody>
                         </ Table >
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel="next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={totalPages}
+                            previousLabel="< previous"
+
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                            containerClassName="pagination"
+                            activeClassName="active"
+                        />
                     </div >
                 </div >
             </div >
